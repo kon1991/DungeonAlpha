@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/CharSelect.gd" type="Script" id=1]
+[ext_resource path="res://Images/titman.png" type="Texture" id=2]
+
+[node name="CharSelect" type="PanelContainer"]
+margin_right = 36.0
+margin_bottom = 36.0
+script = ExtResource( 1 )
+
+[node name="CharButton" type="TextureButton" parent="."]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 34.0
+margin_bottom = 34.0
+texture_normal = ExtResource( 2 )
+[connection signal="mouse_entered" from="CharButton" to="." method="_on_CharButton_mouse_entered"]
+[connection signal="pressed" from="CharButton" to="." method="_on_CharButton_pressed"]

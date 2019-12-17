@@ -1,0 +1,163 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scenes/BattleScreen.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Tick.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/MagicMan.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Beholder.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=5]
+[ext_resource path="res://default_theme.tres" type="Theme" id=6]
+[ext_resource path="res://Images/fade.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=8]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Fade"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "begin_battle"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("UI/FADE:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[node name="BattleScreen" type="Node"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 8.87443 ],
+"_edit_vertical_guides_": [ 154.087 ]
+}
+enemies = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), null, null ]
+
+[node name="BackGround" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.451874
+margin_top = -0.225937
+margin_right = -0.451874
+margin_bottom = -0.225937
+color = Color( 0.0745098, 0.0705882, 0.0705882, 1 )
+
+[node name="PlayerStats" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.237823
+margin_top = 0.237827
+margin_right = 0.237823
+margin_bottom = 0.237823
+theme = ExtResource( 6 )
+
+[node name="PlayerStatPanel" type="PanelContainer" parent="UI"]
+margin_left = 7.47565
+margin_top = 9.28088
+margin_right = 51.4757
+margin_bottom = 46.2809
+
+[node name="PlayerStatContainer" type="VBoxContainer" parent="UI/PlayerStatPanel"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 42.0
+margin_bottom = 35.0
+
+[node name="HPLabel" type="Label" parent="UI/PlayerStatPanel/PlayerStatContainer"]
+margin_right = 40.0
+margin_bottom = 12.0
+text = "30/30HP"
+
+[node name="APLabel" type="Label" parent="UI/PlayerStatPanel/PlayerStatContainer"]
+margin_top = 16.0
+margin_right = 40.0
+margin_bottom = 28.0
+text = "10/10MP"
+
+[node name="EnemyStatPanel" type="PanelContainer" parent="UI"]
+margin_left = 115.0
+margin_top = 9.0
+margin_right = 154.0
+margin_bottom = 44.0
+
+[node name="EnemyStatContainer" type="VBoxContainer" parent="UI/EnemyStatPanel"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 38.0
+margin_bottom = 33.0
+
+[node name="HPLabel" type="Label" parent="UI/EnemyStatPanel/EnemyStatContainer"]
+margin_right = 36.0
+margin_bottom = 12.0
+text = "10/10HP"
+align = 1
+
+[node name="Mood" type="Label" parent="UI/EnemyStatPanel/EnemyStatContainer"]
+margin_top = 16.0
+margin_right = 36.0
+margin_bottom = 28.0
+
+[node name="FADE" type="Sprite" parent="UI"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -32.9816, -5.9211 )
+texture = ExtResource( 7 )
+
+[node name="ActionPanel" type="Panel" parent="UI"]
+margin_left = 7.0
+margin_top = 75.2859
+margin_right = 154.0
+margin_bottom = 115.286
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/ActionPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ButtonContainer" type="HBoxContainer" parent="UI/ActionPanel/CenterContainer"]
+margin_left = 73.0
+margin_top = 20.0
+margin_right = 73.0
+margin_bottom = 20.0
+custom_constants/separation = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_bottom = 14.0
+
+[node name="TextBox" type="Label" parent="UI/CenterContainer"]
+margin_left = 21.0
+margin_top = 1.0
+margin_right = 138.0
+margin_bottom = 13.0
+text = "Dapper Tick Tips his Top Hat"
+script = ExtResource( 8 )
+
+[node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
+wait_time = 0.8
+one_shot = true
+
+[node name="EnemyPosition" type="Position2D" parent="."]
+position = Vector2( 80.8611, 31.3931 )
+z_index = 12
+z_as_relative = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Fade = SubResource( 1 )
+[connection signal="timeout" from="UI/CenterContainer/TextBox/Timer" to="UI/CenterContainer/TextBox" method="_on_Timer_timeout"]
