@@ -39,5 +39,5 @@ func set_hp(new_hp):
 		moodLabel.set("custom_colors/font_color", '9c0b0b') #red
 		
 func greet():
-	set_text("The Tick wiggles his proboscis enticingly")
+	set_text("Dapper Tick tips his Top Hat")
 	
