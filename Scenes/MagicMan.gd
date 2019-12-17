@@ -8,6 +8,7 @@ onready var monsterHP = 15
 func _ready():
 	set_stats(monsterName, monsterDamage, monsterHP, monsterMood)
 	greet()
+	yield(textBox, "end_enemy_text")
 	pass # Replace with function body.
 
 func take_turn():

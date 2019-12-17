@@ -32,6 +32,11 @@ func begin_player_turn():
 #	yield(get_tree().create_timer(0.8), "timeout")
 
 	print("begin player turn")
+	#check for conditions
+	var has_conditions = player.check_conditions()
+	if(has_conditions):
+		yield(textBox, "end_player_text")
+	player.noButtonsPressed = true
 	player.player_turn = true
 	
 func begin_enemy_turn():
@@ -43,12 +48,16 @@ func begin_enemy_turn():
 
 
 func _on_EnemyStats_enemy_end_turn():
-	begin_player_turn()
+	if(!player.player_turn):
+		begin_player_turn()
 
 
 func _on_PlayerStats_end_turn():
-	if(!enemy.dead and !enemy.is_queued_for_deletion()):
-		begin_enemy_turn()
+	print("!!!!!")
+	if(player.player_turn):
+		print("!!!!!!!!!!!")
+		if(!enemy.dead and !enemy.is_queued_for_deletion()):
+			begin_enemy_turn()
 
 func _on_Enemy_died():
 	enemy.queue_free()
@@ -88,3 +97,9 @@ func bind_buttons():
 	for button in buttons:
 		print(button.has_method("set_enemy"))
 		button.set_enemy(enemy)
+		
+func disable_buttons():
+	var buttons = buttonContainer.get_children()
+	for button in buttons:
+		button.set_disabled(true)
+		player.noButtonsPressed = false

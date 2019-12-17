@@ -8,11 +8,14 @@ onready var enemy #= main.find_node("EnemyStats") #find enemy on instance
 onready var actions = ["AttackButton", "HealActionButton"]
 
 
+
 var hp = 10 setget set_hp
 var max_hp = 10 
 var ap = 1
 var maxap = 1
-var player_turn = false
+var player_turn = false setget set_player_turn
+var conditions = []
+var noButtonsPressed = true
 export var damage = 5
 
 
@@ -38,6 +41,10 @@ func set_hp(new_hp):
 	elif (hp <= 0):
 		hp = 0
 	hpLabel.text = str(hp) + "/"  + str(max_hp) + "HP"
+
+func set_player_turn(turn):
+	print("Player_turn: " + str(turn))
+	player_turn = turn
 	
 func set_enemy(newEnemy):
 	enemy = newEnemy
@@ -46,3 +53,12 @@ func set_text(text):
 	textBox.set_text_with_origin(text, "player")
 #	yield(textBox, "end_player_text")
 	print("player : end text")
+	
+func check_conditions():
+	var has_conditions = false
+	for condition in conditions:
+		has_conditions = true
+		if(condition=="poison"):
+			set_hp(-2)
+			set_text("Poison courses through you!")
+	return has_conditions

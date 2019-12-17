@@ -7,7 +7,7 @@ func _ready():
 
 func _on_pressed():
 	._on_pressed()
-	player.player_turn = false
+#	player.player_turn = false
 	print(enemy)
 	player.set_text("You clobber the "+enemy.mname)
 	enemy.set_hp(-player.damage)

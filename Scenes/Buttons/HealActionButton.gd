@@ -5,6 +5,7 @@ func _ready():
 
 func _on_pressed():
 	player.set_hp(4)
-	player.player_turn = false
+#	player.player_turn = false
 	player.set_text("You heal yourself")
+	yield(textBox, "end_player_text")
 	emit_signal("end_turn")

@@ -150,7 +150,7 @@ text = "Dapper Tick Tips his Top Hat"
 script = ExtResource( 8 )
 
 [node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
-wait_time = 0.8
+wait_time = 0.6
 one_shot = true
 
 [node name="EnemyPosition" type="Position2D" parent="."]

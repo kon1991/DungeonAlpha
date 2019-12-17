@@ -6,12 +6,9 @@ onready var monsterMood = "Calm"
 onready var monsterHP = 10
 
 func _ready():
-	mname = monsterName
-	damage = monsterDamage
-	mood = monsterMood
-	hp = monsterHP
-	max_hp = monsterHP
+	set_stats(monsterName, monsterDamage, monsterHP, monsterMood)
 	greet()
+	yield(textBox, "end_enemy_text")
 	pass
 
 func take_turn():
@@ -40,3 +37,7 @@ func set_hp(new_hp):
 		set_mood("Hungry")
 		print(mood)
 		moodLabel.set("custom_colors/font_color", '9c0b0b') #red
+		
+func greet():
+	set_text("The Tick wiggles his proboscis enticingly")
+	

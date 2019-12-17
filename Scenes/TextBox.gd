@@ -26,13 +26,14 @@ func set_text(new_text):
 	else:
 		textQueue.append(new_text)
 
-func set_array_text(array):
+func set_array_text(array, origin):
 	for text in array:
-		set_text(text)
+		set_text_with_origin(text, origin)
 		
 func _on_Timer_timeout():
 	if(!textQueue.empty()):
-		print("not_empty")
+		### CHECK FOR DUPLICATE MESSAGES
+		## concat into "message x times"
 		var text_arr = textQueue.pop_front()
 #		text = textQueue.pop_front()
 		text = text_arr[1]

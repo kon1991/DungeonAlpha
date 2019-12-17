@@ -15,11 +15,11 @@ func _ready():
 func _process(delta):
 	if(player.player_turn == false):
 		set_disabled(true)
-	elif(player.player_turn == true):
+	elif(player.player_turn == true && player.noButtonsPressed == true):
 		set_disabled(false)
 
 func _on_pressed():
-	print("pressed")
+	main.disable_buttons()
 	pass # Replace with function body.
 
 func set_enemy(newEnemy):
