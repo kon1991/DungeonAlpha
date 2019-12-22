@@ -35,7 +35,7 @@ margin_bottom = 49.0
 [node name="CharSelect" parent="UI/CenterContainer2/HBoxContainer" instance=ExtResource( 2 )]
 normalTexture = ExtResource( 3 )
 hoverTexture = ExtResource( 4 )
-charName = "Noi"
+charName = "noi"
 description = "Seeker of Truth"
 
 [node name="CharSelect2" parent="UI/CenterContainer2/HBoxContainer" instance=ExtResource( 2 )]
@@ -43,7 +43,7 @@ margin_left = 40.0
 margin_right = 76.0
 normalTexture = ExtResource( 5 )
 hoverTexture = ExtResource( 6 )
-charName = "Dickmon"
+charName = "dickmon"
 description = "Too Ugly to Die"
 
 [node name="CharSelect3" parent="UI/CenterContainer2/HBoxContainer" instance=ExtResource( 2 )]
@@ -51,7 +51,7 @@ margin_left = 80.0
 margin_right = 116.0
 normalTexture = ExtResource( 7 )
 hoverTexture = ExtResource( 8 )
-charName = "Gato"
+charName = "gato"
 description = "Meow"
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]

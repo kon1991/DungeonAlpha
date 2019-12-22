@@ -75,5 +75,7 @@ func set_mood(new_mood):
 	
 func set_text(text):
 	textBox.set_text_with_origin(text, "enemy")
-#	yield(textBox, "end_enemy_text")
 	print("enemy: en text")
+
+func set_array_text(textArray):
+	textBox.set_array_text(textArray, "enemy")

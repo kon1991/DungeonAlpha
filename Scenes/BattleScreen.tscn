@@ -1,13 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/BattleScreen.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Tick.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Beholder.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/MagicMan.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Beholder.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=5]
-[ext_resource path="res://default_theme.tres" type="Theme" id=6]
-[ext_resource path="res://Images/fade.png" type="Texture" id=7]
-[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=4]
+[ext_resource path="res://default_theme.tres" type="Theme" id=5]
+[ext_resource path="res://Images/fade.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=7]
+[ext_resource path="res://button9slice.tres" type="StyleBox" id=8]
+[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=9]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
@@ -41,10 +42,10 @@ tracks/1/keys = {
 [node name="BattleScreen" type="Node"]
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_horizontal_guides_": [ 8.87443 ],
-"_edit_vertical_guides_": [ 154.087 ]
+"_edit_horizontal_guides_": [ 4.07805 ],
+"_edit_vertical_guides_": [ 151.216, 9.75525 ]
 }
-enemies = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), null, null ]
+enemies = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 2 ), null, null ]
 
 [node name="BackGround" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -56,7 +57,7 @@ margin_bottom = -0.225937
 color = Color( 0.0745098, 0.0705882, 0.0705882, 1 )
 
 [node name="PlayerStats" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
@@ -65,19 +66,37 @@ margin_left = 0.237823
 margin_top = 0.237827
 margin_right = 0.237823
 margin_bottom = 0.237823
-theme = ExtResource( 6 )
+theme = ExtResource( 5 )
+
+[node name="FADE" type="Sprite" parent="UI"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -32.02, -7.64608 )
+texture = ExtResource( 6 )
+
+[node name="StatusPanel" type="Panel" parent="UI"]
+margin_left = 10.0
+margin_top = 38.0
+margin_right = 54.0
+margin_bottom = 55.0
+
+[node name="StatusContainer" type="HBoxContainer" parent="UI/StatusPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_right = -3.0
+custom_constants/separation = 0
 
 [node name="PlayerStatPanel" type="PanelContainer" parent="UI"]
-margin_left = 7.47565
-margin_top = 9.28088
-margin_right = 51.4757
-margin_bottom = 46.2809
+margin_left = 10.0
+margin_top = 4.0
+margin_right = 54.0
+margin_bottom = 36.0
 
 [node name="PlayerStatContainer" type="VBoxContainer" parent="UI/PlayerStatPanel"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 42.0
-margin_bottom = 35.0
+margin_bottom = 30.0
 
 [node name="HPLabel" type="Label" parent="UI/PlayerStatPanel/PlayerStatContainer"]
 margin_right = 40.0
@@ -91,32 +110,27 @@ margin_bottom = 28.0
 text = "10/10MP"
 
 [node name="EnemyStatPanel" type="PanelContainer" parent="UI"]
-margin_left = 115.0
-margin_top = 9.0
-margin_right = 154.0
-margin_bottom = 44.0
+margin_left = 109.0
+margin_top = 4.0
+margin_right = 151.0
+margin_bottom = 36.0
 
 [node name="EnemyStatContainer" type="VBoxContainer" parent="UI/EnemyStatPanel"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 38.0
-margin_bottom = 33.0
+margin_right = 40.0
+margin_bottom = 30.0
 
 [node name="HPLabel" type="Label" parent="UI/EnemyStatPanel/EnemyStatContainer"]
-margin_right = 36.0
+margin_right = 38.0
 margin_bottom = 12.0
 text = "10/10HP"
 align = 1
 
 [node name="Mood" type="Label" parent="UI/EnemyStatPanel/EnemyStatContainer"]
 margin_top = 16.0
-margin_right = 36.0
+margin_right = 38.0
 margin_bottom = 28.0
-
-[node name="FADE" type="Sprite" parent="UI"]
-modulate = Color( 0, 0, 0, 0 )
-position = Vector2( -32.9816, -5.9211 )
-texture = ExtResource( 7 )
 
 [node name="ActionPanel" type="Panel" parent="UI"]
 margin_left = 7.0
@@ -125,15 +139,25 @@ margin_right = 154.0
 margin_bottom = 115.286
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/ActionPanel"]
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -104.0
+margin_bottom = -1.00011
 
 [node name="ButtonContainer" type="HBoxContainer" parent="UI/ActionPanel/CenterContainer"]
-margin_left = 73.0
-margin_top = 20.0
-margin_right = 73.0
-margin_bottom = 20.0
+margin_left = 52.0
+margin_top = 19.0
+margin_right = 52.0
+margin_bottom = 19.0
 custom_constants/separation = 10
+
+[node name="CharSelect" parent="UI/ActionPanel" instance=ExtResource( 7 )]
+margin_left = 3.05859
+margin_top = 1.63126
+margin_right = 39.0586
+margin_bottom = 37.6313
+custom_styles/panel = ExtResource( 8 )
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 anchor_top = 0.5
@@ -147,7 +171,7 @@ margin_top = 1.0
 margin_right = 138.0
 margin_bottom = 13.0
 text = "Dapper Tick Tips his Top Hat"
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
 [node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
 wait_time = 0.6

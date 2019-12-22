@@ -10,6 +10,7 @@ onready var enemyHP
 onready var enemyMood 
 onready var animationPlayer = $AnimationPlayer
 onready var buttonContainer = $UI/ActionPanel/CenterContainer/ButtonContainer
+onready var statusContainer = $UI/StatusPanel/HBoxContainer
 var i = 0
 
 func _ready():
@@ -33,7 +34,7 @@ func begin_player_turn():
 
 	print("begin player turn")
 	#check for conditions
-	var has_conditions = player.check_conditions()
+	var has_conditions = player.check_new_conditions()
 	if(has_conditions):
 		yield(textBox, "end_player_text")
 	player.noButtonsPressed = true
