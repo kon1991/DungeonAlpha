@@ -14,7 +14,7 @@ func _ready():
 func take_turn():
 	randomize()
 #	var rand_ray = randi()%3
-	var rand_ray = 0
+	var rand_ray = randi()%2
 	match rand_ray:
 			0:
 				poison_ray()
@@ -26,13 +26,13 @@ func take_turn():
 	
 	
 func poison_ray():
-	player.new_conditions.append("poison")
+	player.new_conditions.append(["poison", 2, 2])
 	set_text("A sickly green ray hits you!")
 	yield(textBox, "end_enemy_text")
 	emit_signal("end_turn")
 	
 func fear_ray():
-	player.new_conditions.append("fear")
+	player.new_conditions.append(["fear", 2, 1])
 	set_text("A cold purple ray hits you!")
 	yield(textBox, "end_enemy_text")
 	emit_signal("end_turn")

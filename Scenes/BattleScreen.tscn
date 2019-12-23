@@ -5,10 +5,10 @@
 [ext_resource path="res://Scenes/MagicMan.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=4]
 [ext_resource path="res://default_theme.tres" type="Theme" id=5]
-[ext_resource path="res://Images/fade.png" type="Texture" id=6]
-[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=7]
-[ext_resource path="res://button9slice.tres" type="StyleBox" id=8]
-[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=6]
+[ext_resource path="res://button9slice.tres" type="StyleBox" id=7]
+[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=8]
+[ext_resource path="res://Images/fade.png" type="Texture" id=9]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
@@ -27,7 +27,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("UI/FADE:modulate")
+tracks/1/path = NodePath("FADE:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -67,11 +67,6 @@ margin_top = 0.237827
 margin_right = 0.237823
 margin_bottom = 0.237823
 theme = ExtResource( 5 )
-
-[node name="FADE" type="Sprite" parent="UI"]
-modulate = Color( 0, 0, 0, 0 )
-position = Vector2( -32.02, -7.64608 )
-texture = ExtResource( 6 )
 
 [node name="StatusPanel" type="Panel" parent="UI"]
 margin_left = 10.0
@@ -152,12 +147,12 @@ margin_right = 52.0
 margin_bottom = 19.0
 custom_constants/separation = 10
 
-[node name="CharSelect" parent="UI/ActionPanel" instance=ExtResource( 7 )]
+[node name="CharSelect" parent="UI/ActionPanel" instance=ExtResource( 6 )]
 margin_left = 3.05859
 margin_top = 1.63126
 margin_right = 39.0586
 margin_bottom = 37.6313
-custom_styles/panel = ExtResource( 8 )
+custom_styles/panel = ExtResource( 7 )
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 anchor_top = 0.5
@@ -171,11 +166,16 @@ margin_top = 1.0
 margin_right = 138.0
 margin_bottom = 13.0
 text = "Dapper Tick Tips his Top Hat"
-script = ExtResource( 9 )
+script = ExtResource( 8 )
 
 [node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
 wait_time = 0.6
 one_shot = true
+
+[node name="FADE" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -31.7822, -7.40825 )
+texture = ExtResource( 9 )
 
 [node name="EnemyPosition" type="Position2D" parent="."]
 position = Vector2( 80.8611, 31.3931 )

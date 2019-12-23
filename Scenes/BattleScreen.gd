@@ -35,7 +35,10 @@ func begin_player_turn():
 	print("begin player turn")
 	#check for conditions
 	var has_conditions = player.check_new_conditions()
-	if(has_conditions):
+#	if(has_conditions):
+#		yield(textBox, "end_player_text")
+	if(player.status.get_child_count()>0):
+		player.apply_statuses()
 		yield(textBox, "end_player_text")
 	player.noButtonsPressed = true
 	player.player_turn = true

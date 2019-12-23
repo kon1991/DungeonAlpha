@@ -12,13 +12,11 @@ onready var StatusRect = load("res://Scenes/StatusRect.tscn")
 
 var hp = 10 setget set_hp
 var max_hp = 10 
-var ap = 1
-var maxap = 1
 var player_turn = false setget set_player_turn
 var new_conditions = []
-var conditions = []
 var noButtonsPressed = true
 export var damage = 5
+var damage_mod = 0
 
 
 func _ready():
@@ -50,22 +48,40 @@ func check_new_conditions():
 	var has_conditions = false
 	for condition in new_conditions:
 		has_conditions = true
-		print("HEEEERE")
-		create_new_status_rect(condition)
-		print("HEEEERE")
-		if(condition=="poison"):
-			set_hp(-2)
-			set_text("Poison courses through you!")
-			print("HEEEERREE")
-		if(condition=="fear"):
-			damage -= 1
-			set_text("You tremble fearfully")
+		create_new_status(condition[0], condition[1], condition[2])
+#		if(condition=="poison"):
+#			set_hp(-2)
+#			set_text("Poison courses through you!")
+#		if(condition=="fear"):
+#			damage -= 1
+#			set_text("You tremble fearfully")
 	new_conditions = []
 	return has_conditions
 	
-func create_new_status_rect(condition):
-	var img = load("res://Images/Status/"+condition+".png")
+func create_new_status(condition, dur, mod):
 	var statusRect = StatusRect.instance()
-	statusRect.texture = img
+	statusRect.init(condition, dur, mod)
 	status.add_child(statusRect)
-	conditions.append(condition)
+	
+func apply_statuses():
+	var statusList = status.get_children()
+	for status in statusList:
+		apply_status(status)
+		
+func apply_status(status):
+	var type = status.type
+	var mod = status.modifier
+	var dur = status.duration
+	match type:
+			"poison":
+				set_text("Poison courses through your veins!")
+				set_hp(-status.modifier)
+				status.set_duration(-1)
+			"fear":
+				set_text("Your knees tremble with dread!")
+				if(!status.applied):
+					damage_mod = damage_mod - 1
+					status.applied = true
+				status.set_duration(-1)
+				if(status.duration<=0):
+					damage_mod = damage_mod + 1
