@@ -10,16 +10,32 @@ onready var enemyHP
 onready var enemyMood 
 onready var animationPlayer = $AnimationPlayer
 onready var buttonContainer = $UI/ActionPanel/CenterContainer/ButtonContainer
+onready var itemContainer = $UI/ActionPanel/CenterContainer/ItemContainer
+onready var actionContainer = $UI/ActionPanel/CenterContainer/ActionContainer
+onready var specialContainer = $UI/ActionPanel/CenterContainer/SpecialContainer
+onready var backButton = $UI/ActionPanel/BackButton
 onready var statusContainer = $UI/StatusPanel/HBoxContainer
+onready var postBattle = $UI/PostBattlePanel
+onready var postBattleRewards = $UI/PostBattlePanel/MarginContainer/OuterVBox/InnerVBox
+onready var nextButton = $UI/PostBattlePanel/MarginContainer/OuterVBox/CenterContainer/NextButton
 var i = 0
 
 func _ready():
 	begin_battle()
+	
 	pass # Replace with function body.
 
 func begin_battle():
+	print("You have " + str(player.xp) +"XP!")
+	var item_str ="You have"
+	var inv = player.inventory
+	for item in inv:
+		item_str += " a " + item +","
+	item_str += "!"
+	print(item_str)
 	get_next_enemy()
 	get_buttons()
+	get_items()
 #	bind_buttons()
 	playerHP.text = str(player.hp) + "/"  + str(player.max_hp) + "HP"
 	print(enemy.hp)
@@ -63,12 +79,27 @@ func _on_PlayerStats_end_turn():
 		if(!enemy.dead and !enemy.is_queued_for_deletion()):
 			begin_enemy_turn()
 
-func _on_Enemy_died():
+func _on_Enemy_died(won := true):
+	yield(get_tree().create_timer(0.8), "timeout")
+	var enemy_name = enemy.mname
 	enemy.queue_free()
+	#should move to a function##
 	var buttons = buttonContainer.get_children()
 	for button in buttons:
 		button.queue_free()
+	buttons = itemContainer.get_children()
+	for button in buttons:
+		button.queue_free()
 	player.player_turn = false
+	### magic time ####
+	handle_post_battle(enemy_name, won)
+	yield(nextButton, "pressed")
+	var rewardLabels = postBattleRewards.get_children()
+	
+	for label in rewardLabels:
+		label.queue_free()
+	postBattle.visible = false
+	##################
 	animationPlayer.play("Fade")
 	#begin_battle()
 	yield(animationPlayer,"animation_finished") #this probably doesnt do shit
@@ -96,6 +127,14 @@ func get_buttons():
 		button.set_enemy(enemy)
 		buttonContainer.add_child(button)
 		
+func get_items():
+	for item in player.inventory:
+		var Button = load("res://Scenes/Items/"+item+".tscn")
+		var button = Button.instance()
+		button.set_enemy(enemy)
+		itemContainer.add_child(button)
+	
+		
 func bind_buttons():
 	var buttons = buttonContainer.get_children()
 	for button in buttons:
@@ -103,7 +142,42 @@ func bind_buttons():
 		button.set_enemy(enemy)
 		
 func disable_buttons():
+	
+	###MIGHT EXPAND WITH OTHER CONTAINERS####
 	var buttons = buttonContainer.get_children()
 	for button in buttons:
 		button.set_disabled(true)
 		player.noButtonsPressed = false
+		
+func handle_post_battle(mname, won):
+	postBattle.visible = true
+	if(won):
+		var rewards = Global.determine_rewards(mname)
+		for reward in rewards:
+			var newLabel = Label.new()
+			newLabel.text = reward.message
+			postBattleRewards.add_child(newLabel)
+		handle_rewards(rewards)
+		rewards.clear()
+
+func handle_rewards(rewards):
+	for reward in rewards:
+		if(reward.cat == reward.ITEM):
+			player.inventory.append(reward.item_name)
+		elif(reward.cat == reward.EXP):
+			player.xp += reward.num
+
+func _on_BackButton_pressed():
+	backButton.visible = false
+	itemContainer.visible = false
+	actionContainer.visible = false
+	specialContainer.visible = false
+	buttonContainer.visible = true
+	pass # Replace with function body.
+
+func change_inventory(item):
+	player.inventory.erase(item)
+	var buttons = itemContainer.get_children()
+	for button in buttons:
+		button.queue_free()
+	get_items()

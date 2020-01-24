@@ -6,9 +6,10 @@ onready var textBox = main.find_node("TextBox")
 onready var statPanel = main.find_node("PlayerStatPanel")
 onready var hpLabel = statPanel.find_node("HPLabel")
 onready var enemy #= main.find_node("EnemyStats") #find enemy on instance
-onready var actions = ["AttackButton", "HealActionButton"]
+onready var actions = ["AttackButton", "HealActionButton", "ItemActionButton"]
 onready var StatusRect = load("res://Scenes/StatusRect.tscn")
-
+onready var inventory = ["S_Potion"]
+onready var xp = 0
 
 var hp = 10 setget set_hp
 var max_hp = 10 
@@ -49,12 +50,6 @@ func check_new_conditions():
 	for condition in new_conditions:
 		has_conditions = true
 		create_new_status(condition[0], condition[1], condition[2])
-#		if(condition=="poison"):
-#			set_hp(-2)
-#			set_text("Poison courses through you!")
-#		if(condition=="fear"):
-#			damage -= 1
-#			set_text("You tremble fearfully")
 	new_conditions = []
 	return has_conditions
 	

@@ -1,7 +1,15 @@
 extends Node
 
+onready var Reward = load("res://Reward.gd")
 var current_scene = null
 var player_character = null
+var monster_rewards = { "Tick" : "S_Potion",
+						"Magic Man" : "S_Potion",
+						"Beholdey" : "S_Potion"
+						}
+var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3}
+var xp = 0
+var inventory = []
 
 func _ready():
 	var root = get_tree().get_root()
@@ -27,3 +35,14 @@ func _deferred_goto_scene(path):
 	var newscene = sceneResource.instance()
 	newscene.connect("tree_entered", get_tree(), "set_current_scene", [newscene], CONNECT_ONESHOT)
 	get_tree().get_root().add_child(newscene)
+	
+func determine_rewards(mname):
+	var rewards = []
+	var monster_reward = monster_rewards.get(mname)
+	
+	var newReward = Reward.new(0, 1, monster_reward)
+	rewards.append(newReward)
+	var xp_reward = xp_rewards.get(mname)
+	newReward = Reward.new(1, xp_reward, null)
+	rewards.append(newReward)
+	return rewards

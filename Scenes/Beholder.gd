@@ -14,7 +14,7 @@ func _ready():
 func take_turn():
 	randomize()
 #	var rand_ray = randi()%3
-	var rand_ray = randi()%2
+	var rand_ray = randi()%3
 	match rand_ray:
 			0:
 				poison_ray()

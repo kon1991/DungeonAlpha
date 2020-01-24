@@ -36,4 +36,4 @@ func set_hp(new_hp):
 		set_mood("???")
 		
 func escape(): 
-	main._on_Enemy_died()
+	main._on_Enemy_died(false)
