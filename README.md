@@ -1,2 +1,2 @@
 # DungeonAlpha
- THE ONLY ONE
+ Open in Godot and press run you dummy
