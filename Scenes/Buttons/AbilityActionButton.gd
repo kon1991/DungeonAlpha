@@ -5,5 +5,5 @@ func _ready():
 
 func _on_pressed():
 	main.buttonContainer.visible = false
-	main.itemContainer.visible = true
+	main.actionContainer.visible = true
 	main.backButton.visible = true

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blobby.png-7528b97be9dd6343fd8ed7b342d1a259.stex"
+path="res://.import/devil1.png-11be49878a30392a9a45964cbf282a83.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/blobby.png"
-dest_files=[ "res://.import/blobby.png-7528b97be9dd6343fd8ed7b342d1a259.stex" ]
+source_file="res://Images/devil1.png"
+dest_files=[ "res://.import/devil1.png-11be49878a30392a9a45964cbf282a83.stex" ]
 
 [params]
 

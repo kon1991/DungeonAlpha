@@ -5,14 +5,18 @@ onready var status = main.find_node("StatusContainer")
 onready var textBox = main.find_node("TextBox")
 onready var statPanel = main.find_node("PlayerStatPanel")
 onready var hpLabel = statPanel.find_node("HPLabel")
+onready var mpLabel = statPanel.find_node("MPLabel")
 onready var enemy #= main.find_node("EnemyStats") #find enemy on instance
-onready var actions = ["AttackButton", "HealActionButton", "ItemActionButton"]
+onready var actions = ["AttackButton", "AbilityActionButton", "ItemActionButton"]
+onready var skills = ["PowerWordButton"]
 onready var StatusRect = load("res://Scenes/StatusRect.tscn")
 onready var inventory = ["S_Potion"]
 onready var xp = 0
 
 var hp = 10 setget set_hp
 var max_hp = 10 
+var mp = 10 setget set_mp
+var max_mp = 10
 var player_turn = false setget set_player_turn
 var new_conditions = []
 var noButtonsPressed = true
@@ -33,6 +37,14 @@ func set_hp(new_hp):
 		hp = 0
 	hpLabel.text = str(hp) + "/"  + str(max_hp) + "HP"
 
+func set_mp(new_mp):
+	mp = mp + new_mp
+	if (mp >= max_mp):
+		mp = max_mp
+	elif (mp <= 0):
+		mp = 0
+	mpLabel.text = str(mp) + "/"  + str(max_mp) + "MP"
+	
 func set_player_turn(turn):
 	print("Player_turn: " + str(turn))
 	player_turn = turn

@@ -15,6 +15,7 @@ func take_turn():
 	if(mood == "???"):
 		set_text("The magic man vanishes!")
 		yield(textBox, "end_enemy_text")
+		yield(get_tree().create_timer(0.8), "timeout")
 		escape()
 	else:
 		attack()

@@ -1,6 +1,6 @@
 extends Node
 
-enum {ITEM, EXP}
+enum {ITEM, EXP, GOLD}
 var cat
 var num
 var message
@@ -17,4 +17,7 @@ func _init(category, number, name):
 	if(cat == EXP):
 		message = "You gained " + str(num) + " EXP!"
 		print(message)
+	if(cat == GOLD):
+		item_name = "gold"
+		message = "You gained " + str(num) + " GP!"
 	pass

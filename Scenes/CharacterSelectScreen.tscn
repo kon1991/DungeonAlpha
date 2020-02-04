@@ -35,7 +35,7 @@ margin_bottom = 49.0
 [node name="CharSelect" parent="UI/CenterContainer2/HBoxContainer" instance=ExtResource( 2 )]
 normalTexture = ExtResource( 3 )
 hoverTexture = ExtResource( 4 )
-charName = "noi"
+charName = "Noi"
 description = "Seeker of Truth"
 
 [node name="CharSelect2" parent="UI/CenterContainer2/HBoxContainer" instance=ExtResource( 2 )]

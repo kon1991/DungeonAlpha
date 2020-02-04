@@ -6,6 +6,7 @@ onready var enemy
 onready var textBox = $UI/CenterContainer/TextBox
 onready var enemyPanel = $UI/EnemyStatPanel/EnemyStatContainer#
 onready var playerHP = player.hpLabel
+onready var playerMP = player.mpLabel
 onready var enemyHP 
 onready var enemyMood 
 onready var animationPlayer = $AnimationPlayer
@@ -18,6 +19,7 @@ onready var statusContainer = $UI/StatusPanel/HBoxContainer
 onready var postBattle = $UI/PostBattlePanel
 onready var postBattleRewards = $UI/PostBattlePanel/MarginContainer/OuterVBox/InnerVBox
 onready var nextButton = $UI/PostBattlePanel/MarginContainer/OuterVBox/CenterContainer/NextButton
+onready var textInput = $UI/ActionPanel/CenterContainer/TextInput
 var i = 0
 
 func _ready():
@@ -36,10 +38,13 @@ func begin_battle():
 	get_next_enemy()
 	get_buttons()
 	get_items()
+	get_skills()
+	var abilities = Global.get_actions(Global.player_character)
+	for ability in abilities:
+		print("ABILITY: "+ability)
 #	bind_buttons()
 	playerHP.text = str(player.hp) + "/"  + str(player.max_hp) + "HP"
-	print(enemy.hp)
-	print(enemyHP.text+"   ")
+	playerMP.text = str(player.mp) + "/"  + str(player.max_mp) + "MP"
 	#enemyHP.text= str(enemy.hp) + "/"  + str(enemy.max_hp) + "HP"
 	enemyMood.text = enemy.mood
 	begin_player_turn()
@@ -90,6 +95,9 @@ func _on_Enemy_died(won := true):
 	buttons = itemContainer.get_children()
 	for button in buttons:
 		button.queue_free()
+	buttons = actionContainer.get_children()
+	for button in buttons:
+		button.queue_free()
 	player.player_turn = false
 	### magic time ####
 	handle_post_battle(enemy_name, won)
@@ -116,6 +124,8 @@ func get_next_enemy():
 		player.set_enemy(enemy)
 		enemy.connect("enemy_died", self, "_on_Enemy_died")
 		enemy.connect("end_turn", self, "_on_EnemyStats_enemy_end_turn")
+		#move signal connections to special function, to connect special signals
+		enemy.connect("flash", self, "_on_Flash")
 	else:
 		print("all done")
 	pass
@@ -133,7 +143,13 @@ func get_items():
 		var button = Button.instance()
 		button.set_enemy(enemy)
 		itemContainer.add_child(button)
-	
+
+func get_skills():
+	for skill in player.skills:
+		var Button = load("res://Scenes/Buttons/"+skill+".tscn")
+		var button = Button.instance()
+		button.set_enemy(enemy)
+		actionContainer.add_child(button)
 		
 func bind_buttons():
 	var buttons = buttonContainer.get_children()
@@ -173,6 +189,7 @@ func _on_BackButton_pressed():
 	actionContainer.visible = false
 	specialContainer.visible = false
 	buttonContainer.visible = true
+	textInput.visible = false
 	pass # Replace with function body.
 
 func change_inventory(item):
@@ -181,3 +198,6 @@ func change_inventory(item):
 	for button in buttons:
 		button.queue_free()
 	get_items()
+
+func _on_Flash():
+	animationPlayer.play("flash")

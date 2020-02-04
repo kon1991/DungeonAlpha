@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Noi.png-c5f2dd4cdcb4a9492da5089ef0e56d5a.stex"
+path="res://.import/devil2.png-880bc2f226fba2c39f31cc6b1dfdd6f5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/SelectImages/Portraits/Noi.png"
-dest_files=[ "res://.import/Noi.png-c5f2dd4cdcb4a9492da5089ef0e56d5a.stex" ]
+source_file="res://Images/devil2.png"
+dest_files=[ "res://.import/devil2.png-880bc2f226fba2c39f31cc6b1dfdd6f5.stex" ]
 
 [params]
 

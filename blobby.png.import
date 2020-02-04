@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Noi.png-c5f2dd4cdcb4a9492da5089ef0e56d5a.stex"
+path="res://.import/blobby.png-c4e21920d329a801ad0ca5b602cd7b44.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/SelectImages/Portraits/Noi.png"
-dest_files=[ "res://.import/Noi.png-c5f2dd4cdcb4a9492da5089ef0e56d5a.stex" ]
+source_file="res://blobby.png"
+dest_files=[ "res://.import/blobby.png-c4e21920d329a801ad0ca5b602cd7b44.stex" ]
 
 [params]
 

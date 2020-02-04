@@ -2,14 +2,18 @@ extends Node
 
 onready var Reward = load("res://Reward.gd")
 var current_scene = null
-var player_character = null
+var player_character = "Noi"
 var monster_rewards = { "Tick" : "S_Potion",
 						"Magic Man" : "S_Potion",
-						"Beholdey" : "S_Potion"
+						"Beholdey" : "S_Potion",
+						"Blobby" : "S_Potion"
 						}
-var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3}
+var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2}
+var gold_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2}
 var xp = 0
+var gold = 0
 var inventory = []
+var character_abilities = {"Noi" : ["Truth", "Seek"]}
 
 func _ready():
 	var root = get_tree().get_root()
@@ -36,6 +40,10 @@ func _deferred_goto_scene(path):
 	newscene.connect("tree_entered", get_tree(), "set_current_scene", [newscene], CONNECT_ONESHOT)
 	get_tree().get_root().add_child(newscene)
 	
+func get_actions(char_name):
+	print(char_name)
+	return character_abilities[char_name]
+	
 func determine_rewards(mname):
 	var rewards = []
 	var monster_reward = monster_rewards.get(mname)
@@ -44,5 +52,8 @@ func determine_rewards(mname):
 	rewards.append(newReward)
 	var xp_reward = xp_rewards.get(mname)
 	newReward = Reward.new(1, xp_reward, null)
+	rewards.append(newReward)
+	var gold_reward = gold_rewards.get(mname)
+	newReward = Reward.new(2, gold_reward, null)
 	rewards.append(newReward)
 	return rewards

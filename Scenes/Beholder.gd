@@ -9,11 +9,10 @@ func _ready():
 	set_stats(monsterName, monsterDamage, monsterHP, monsterMood)
 	sprite.scale = Vector2(1,1)
 	greet()
-	pass # Replace with function body.
+	yield(textBox, "end_enemy_text")
 
 func take_turn():
 	randomize()
-#	var rand_ray = randi()%3
 	var rand_ray = randi()%3
 	match rand_ray:
 			0:

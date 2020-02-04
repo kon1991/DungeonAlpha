@@ -15,7 +15,7 @@ onready var mood = "Calm" setget set_mood
 onready var max_hp = 10 
 onready var damage = 3
 onready var dead = false
-onready var mname
+onready var mname = "#@???!?"
 signal end_turn
 signal enemy_died
 
