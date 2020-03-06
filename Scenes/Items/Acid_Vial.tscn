@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Buttons/ActionButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Items/Acid_Vial.gd" type="Script" id=2]
+
+[node name="Acid_Vial" instance=ExtResource( 1 )]
+text = "Acid Vial"
+script = ExtResource( 2 )

@@ -1,15 +1,21 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/BattleScreen.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Tick.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Devil.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=4]
-[ext_resource path="res://default_theme.tres" type="Theme" id=5]
-[ext_resource path="res://button9slice.tres" type="StyleBox" id=6]
-[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=8]
-[ext_resource path="res://Images/fade.png" type="Texture" id=9]
-[ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=10]
+[ext_resource path="res://Scenes/Blobby.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/MagicMan.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/BugGang.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Beholder.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Wurm.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Devil.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=9]
+[ext_resource path="res://default_theme.tres" type="Theme" id=10]
+[ext_resource path="res://button9slice.tres" type="StyleBox" id=11]
+[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=13]
+[ext_resource path="res://Images/fade.png" type="Texture" id=14]
+[ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=15]
+[ext_resource path="res://bigfont.tres" type="DynamicFont" id=16]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
@@ -41,7 +47,58 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "flash"
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("YOUDIED:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("UI:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BackGround:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0.176471, 0.0117647, 0.0117647, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TryAgainContainer/TryAgainButton:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("BackGround:color")
 tracks/0/interp = 1
@@ -58,10 +115,10 @@ tracks/0/keys = {
 [node name="BattleScreen" type="Node"]
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_horizontal_guides_": [ 80.4012 ],
-"_edit_vertical_guides_": [ 156.224, 4.68182 ]
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
 }
-enemies = [ ExtResource( 2 ), ExtResource( 3 ) ]
+enemies = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]
 
 [node name="BackGround" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -73,7 +130,7 @@ margin_bottom = -0.225937
 color = Color( 0, 0, 0, 1 )
 
 [node name="PlayerStats" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource( 9 )
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
@@ -82,7 +139,7 @@ margin_left = 0.237823
 margin_top = 0.237827
 margin_right = 0.237823
 margin_bottom = 0.237823
-theme = ExtResource( 5 )
+theme = ExtResource( 10 )
 
 [node name="StatusPanel" type="Panel" parent="UI"]
 margin_left = 10.0
@@ -177,8 +234,8 @@ margin_top = 13.0
 margin_right = 81.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 64, 12 )
-custom_styles/focus = ExtResource( 6 )
-custom_styles/normal = ExtResource( 6 )
+custom_styles/focus = ExtResource( 11 )
+custom_styles/normal = ExtResource( 11 )
 align = 3
 caret_blink = true
 
@@ -213,12 +270,20 @@ margin_right = 49.0
 margin_bottom = 19.0
 columns = 2
 
-[node name="CharSelect" parent="UI/ActionPanel" instance=ExtResource( 7 )]
+[node name="InteractContainer" type="GridContainer" parent="UI/ActionPanel/CenterContainer"]
+visible = false
+margin_left = 49.0
+margin_top = 19.0
+margin_right = 49.0
+margin_bottom = 19.0
+columns = 2
+
+[node name="CharSelect" parent="UI/ActionPanel" instance=ExtResource( 12 )]
 margin_left = 3.05859
 margin_top = 1.63126
 margin_right = 39.0586
 margin_bottom = 37.6313
-custom_styles/panel = ExtResource( 6 )
+custom_styles/panel = ExtResource( 11 )
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 anchor_top = 0.5
@@ -232,10 +297,10 @@ margin_top = 1.0
 margin_right = 138.0
 margin_bottom = 13.0
 text = "Dapper Tick Tips his Top Hat"
-script = ExtResource( 8 )
+script = ExtResource( 13 )
 
 [node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
-wait_time = 0.9
+wait_time = 1.5
 one_shot = true
 
 [node name="PostBattlePanel" type="Panel" parent="UI"]
@@ -250,11 +315,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 20
 custom_constants/margin_top = 10
-custom_constants/margin_left = 20
+custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
 [node name="OuterVBox" type="VBoxContainer" parent="UI/PostBattlePanel/MarginContainer"]
-margin_left = 20.0
+margin_left = 10.0
 margin_top = 10.0
 margin_right = 131.0
 margin_bottom = 104.0
@@ -262,6 +327,7 @@ margin_bottom = 104.0
 [node name="InnerVBox" type="VBoxContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox"]
 margin_right = 111.0
 margin_bottom = 70.0
+grow_horizontal = 0
 rect_min_size = Vector2( 0, 70 )
 custom_constants/separation = 5
 
@@ -283,16 +349,42 @@ z_index = 12
 z_as_relative = false
 
 [node name="FADE" type="Sprite" parent="."]
-visible = false
 modulate = Color( 0, 0, 0, 0 )
-position = Vector2( -31.7822, -7.08472 )
-texture = ExtResource( 9 )
+position = Vector2( -31.7822, -5.76712 )
+texture = ExtResource( 14 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fade = SubResource( 1 )
-anims/flash = SubResource( 2 )
+anims/death = SubResource( 2 )
+anims/flash = SubResource( 3 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
+stream = ExtResource( 15 )
+
+[node name="TryAgainContainer" type="CenterContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -37.0
+mouse_filter = 2
+
+[node name="TryAgainButton" type="Button" parent="TryAgainContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 58.0
+margin_top = 8.0
+margin_right = 101.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 20, 20 )
+theme = ExtResource( 10 )
+text = "Try Again?"
+
+[node name="YOUDIED" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 8.95967
+margin_top = 58.5014
+margin_right = 150.96
+margin_bottom = 99.5014
+custom_fonts/font = ExtResource( 16 )
+text = "YOU DIED"
 [connection signal="pressed" from="UI/ActionPanel/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="timeout" from="UI/CenterContainer/TextBox/Timer" to="UI/CenterContainer/TextBox" method="_on_Timer_timeout"]

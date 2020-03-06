@@ -21,6 +21,7 @@ func set_text_with_origin(new_text, origin):
 		
 func set_text(new_text):
 	if(timer.is_stopped()):
+		####r ight here
 		text  = new_text
 		timer.start()
 	else:
@@ -34,6 +35,7 @@ func _on_Timer_timeout():
 	if(!textQueue.empty()):
 		### CHECK FOR DUPLICATE MESSAGES
 		## concat into "message x times"
+		## If textQue empty add extra timer??
 		var text_arr = textQueue.pop_front()
 #		text = textQueue.pop_front()
 		text = text_arr[1]

@@ -1,6 +1,6 @@
 extends Node
 
-enum {ITEM, EXP, GOLD}
+enum {ITEM, PASS, WEAP, ARM, EXP, GOLD}
 var cat
 var num
 var message
@@ -12,12 +12,16 @@ func _init(category, number, name):
 	
 	if(cat == ITEM): 
 		item_name = name
-		message = "You found x" + str(num) + " " + item_name + "!"
-		print(message)
+		message = "You found " + item_name + "!"
 	if(cat == EXP):
 		message = "You gained " + str(num) + " EXP!"
-		print(message)
 	if(cat == GOLD):
 		item_name = "gold"
 		message = "You gained " + str(num) + " GP!"
+	if(cat == PASS):
+		item_name = name
+		message = "You found " + item_name + "!"
+	if(cat == WEAP):
+		item_name = name
+		message = "You found " + item_name + "!"
 	pass

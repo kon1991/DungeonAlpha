@@ -6,7 +6,12 @@
 [node name="ActionButton" type="Button"]
 margin_right = 12.0
 margin_bottom = 20.0
-rect_min_size = Vector2( 32, 12 )
+rect_min_size = Vector2( 38, 12 )
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
+
+[node name="TooltipTimer" type="Timer" parent="."]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="timeout" from="TooltipTimer" to="." method="_on_TooltipTimer_timeout"]

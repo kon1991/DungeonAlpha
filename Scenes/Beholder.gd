@@ -4,7 +4,7 @@ onready var monsterName = "Beholdey"
 onready var monsterDamage = 3
 onready var monsterMood = "Gazey"
 onready var monsterHP = 18
-
+onready var specials = []
 func _ready():
 	set_stats(monsterName, monsterDamage, monsterHP, monsterMood)
 	sprite.scale = Vector2(1,1)
@@ -13,13 +13,13 @@ func _ready():
 
 func take_turn():
 	randomize()
-	var rand_ray = randi()%3
+	var rand_ray = randi()%5
 	match rand_ray:
-			0:
+			0,1:
 				poison_ray()
-			1:
+			2,3:
 				fear_ray()
-			2: 
+			4: 
 				death_ray()
 	pass
 	
@@ -45,3 +45,4 @@ func death_ray():
 func greet():
 	set_text("The Beholder gazes at you pensively..")
 	yield(textBox, "end_enemy_text")
+	emit_signal("greet_over")

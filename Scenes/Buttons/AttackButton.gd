@@ -7,11 +7,10 @@ func _ready():
 
 func _on_pressed():
 	._on_pressed()
-#	player.player_turn = false
-	print(enemy)
-	player.set_text("You clobber the "+enemy.mname)
-	enemy.set_hp(-(player.damage + player.damage_mod))
-	print("YOU DID DAMAGE = " + str(player.damage + player.damage_mod))
+	main.disable_buttons()
+#	player.set_text("You clobber the "+enemy.mname)
+#	enemy.set_hp(-(player.damage + player.damage_mod))
+	player.attack()
 	yield(textBox, "end_player_text")
 	emit_signal("end_turn")
 	

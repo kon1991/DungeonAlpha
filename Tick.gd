@@ -4,23 +4,27 @@ onready var monsterName = "Tick"
 onready var monsterDamage = 3
 onready var monsterMood = "Calm"
 onready var monsterHP = 10
+onready var specials = ["PetTickButton"]
+onready var hearts = $Hearts
 
 func _ready():
 	set_stats(monsterName, monsterDamage, monsterHP, monsterMood)
+	hearts.position = position.position + Vector2(-3,-20)
 	greet()
-	yield(textBox, "end_enemy_text")
-	pass
 
 func take_turn():
 	if(mood=="Hungry"):
 		suck()
 	else:
 		attack()
+		if(hearts.is_emitting()):
+			print("hearts")
 	pass
 	
 func attack():
 	player.set_hp(-damage)
 	set_text("The tick slaps you")
+#	player.new_conditions.append(["mag", 2, 2])
 	yield(textBox, "end_enemy_text")
 	emit_signal("end_turn")
 	
@@ -31,7 +35,7 @@ func suck():
 	yield(textBox, "end_enemy_text")
 	emit_signal("end_turn")
 	
-func set_hp(new_hp):
+func set_hp(new_hp, type="phys"):
 	.set_hp(new_hp)
 	if(hp <=5):
 		set_mood("Hungry")
@@ -40,4 +44,6 @@ func set_hp(new_hp):
 		
 func greet():
 	set_text("Dapper Tick tips his Top Hat")
+	yield(textBox, "end_enemy_text")
+	emit_signal("greet_over")
 	

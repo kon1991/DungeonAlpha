@@ -9,6 +9,7 @@ onready var moodLabel = statPanel.find_node("Mood")
 onready var hpLabel = statPanel.find_node("HPLabel")
 onready var position = main.find_node("EnemyPosition")
 onready var sprite = $Sprite
+onready var animationPlayer = $AnimationPlayer
 
 onready var hp = 10 setget set_hp
 onready var mood = "Calm" setget set_mood
@@ -16,8 +17,12 @@ onready var max_hp = 10
 onready var damage = 3
 onready var dead = false
 onready var mname = "#@???!?"
+onready var specialActions = []
+onready var tags = []
+
 signal end_turn
 signal enemy_died
+signal greet_over
 
 
 
@@ -31,13 +36,14 @@ func _ready():
 	moodLabel.set("custom_colors/font_color", 'ffffff') 
 #	greet()
 
-func set_stats(mName, mDamage, mHP, mMood):
+func set_stats(mName, mDamage, mHP, mMood, mtags=[]):
 	mname = mName
 	damage = mDamage
 	mood = mMood
 	hp = mHP
 	max_hp = mHP
 	hpLabel.set_text(str(hp) + "/"  + str(max_hp) + "HP")
+	tags = mtags
 	
 func greet():
 	if(mname==null):
@@ -52,7 +58,8 @@ func take_turn():
 		pass
 	emit_signal("end_turn")
 
-func set_hp(new_hp):
+func set_hp(new_hp, type="phys"):
+	print("NEW DODOD")
 	hp = hp + new_hp
 	if (hp >= max_hp):
 		hp = max_hp
@@ -79,3 +86,9 @@ func set_text(text):
 
 func set_array_text(textArray):
 	textBox.set_array_text(textArray, "enemy")
+	
+func has_tag(tag):
+	if(tags.has(tag)):
+		return true
+	else:
+		return false

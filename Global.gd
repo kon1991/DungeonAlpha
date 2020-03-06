@@ -3,13 +3,14 @@ extends Node
 onready var Reward = load("res://Reward.gd")
 var current_scene = null
 var player_character = "Noi"
-var monster_rewards = { "Tick" : "S_Potion",
-						"Magic Man" : "S_Potion",
+var item_rewards = { "Tick" : "S_Potion",
+						"Magic Man" : "Magic_Dust",
 						"Beholdey" : "S_Potion",
-						"Blobby" : "S_Potion"
+						"Blobby" : "S_Potion",
+						"Bug Gang": "S_Potion"
 						}
-var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2}
-var gold_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2}
+var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 2}
+var gold_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 5}
 var xp = 0
 var gold = 0
 var inventory = []
@@ -46,14 +47,13 @@ func get_actions(char_name):
 	
 func determine_rewards(mname):
 	var rewards = []
-	var monster_reward = monster_rewards.get(mname)
-	
-	var newReward = Reward.new(0, 1, monster_reward)
+	var item_reward = Loot.get_item_reward(mname)
+	var newReward = Reward.new(item_reward[0], 1, item_reward[1])
 	rewards.append(newReward)
 	var xp_reward = xp_rewards.get(mname)
-	newReward = Reward.new(1, xp_reward, null)
+	newReward = Reward.new(4, xp_reward, null)
 	rewards.append(newReward)
 	var gold_reward = gold_rewards.get(mname)
-	newReward = Reward.new(2, gold_reward, null)
+	newReward = Reward.new(5, gold_reward, null)
 	rewards.append(newReward)
 	return rewards

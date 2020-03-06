@@ -7,21 +7,37 @@ onready var statPanel = main.find_node("PlayerStatPanel")
 onready var hpLabel = statPanel.find_node("HPLabel")
 onready var mpLabel = statPanel.find_node("MPLabel")
 onready var enemy #= main.find_node("EnemyStats") #find enemy on instance
-onready var actions = ["AttackButton", "AbilityActionButton", "ItemActionButton"]
-onready var skills = ["PowerWordButton"]
+onready var actions = ["AttackButton", "AbilityActionButton", "ItemActionButton", "SpecialActionButton"]
+onready var skills = ["PowerWordButton", "HealActionButton"]
 onready var StatusRect = load("res://Scenes/StatusRect.tscn")
-onready var inventory = ["S_Potion"]
-onready var xp = 0
 
-var hp = 10 setget set_hp
-var max_hp = 10 
+onready var Weapon = load("res://Scenes/Weapon.gd")
+onready var weapon_name = "Sword"
+onready var weapon 
+
+onready var Armor = load("res://Scenes/Armor.gd")
+onready var armor_name = "Cloth"
+onready var armor
+
+onready var inventory = ["S_Potion"]
+
+onready var passive = []
+onready var xp = 0
+onready var gold = 10
+
+var hp = 20 setget set_hp
+var max_hp = 20
 var mp = 10 setget set_mp
 var max_mp = 10
+var mp_regen = 5
 var player_turn = false setget set_player_turn
 var new_conditions = []
 var noButtonsPressed = true
-export var damage = 5
+export var damage = 10
 var damage_mod = 0
+
+#special vars
+var doom_count = 0
 
 
 func _ready():
@@ -34,7 +50,7 @@ func set_hp(new_hp):
 	if (hp >= max_hp):
 		hp = max_hp
 	elif (hp <= 0):
-		hp = 0
+		main.on_death()
 	hpLabel.text = str(hp) + "/"  + str(max_hp) + "HP"
 
 func set_mp(new_mp):
@@ -54,12 +70,21 @@ func set_enemy(newEnemy):
 	
 func set_text(text):
 	textBox.set_text_with_origin(text, "player")
-#	yield(textBox, "end_player_text")
-	print("player : end text")
+
+func set_array_text(textArray):
+	textBox.set_array_text(textArray, "player")
+
+func create_weapon():
+	weapon = Weapon.new("Sword", 9, 1, "You slash the ", enemy, self)
+	
+func attack():
+	weapon.attack()
 	
 func check_new_conditions():
 	var has_conditions = false
+	var condition_num = 0
 	for condition in new_conditions:
+		condition_num += 1
 		has_conditions = true
 		create_new_status(condition[0], condition[1], condition[2])
 	new_conditions = []
@@ -68,13 +93,30 @@ func check_new_conditions():
 func create_new_status(condition, dur, mod):
 	var statusRect = StatusRect.instance()
 	statusRect.init(condition, dur, mod)
+	
 	status.add_child(statusRect)
 	
 func apply_statuses():
 	var statusList = status.get_children()
+	doom_count = 0
 	for status in statusList:
 		apply_status(status)
-		
+	match doom_count:
+		1:
+			set_text("A chill runs down your spine")
+		2:
+			set_text("A buzzing fills your head")
+		3:
+			set_text("You feel doomed...")
+		4:
+			set_array_text(["The gates of hell open", "Dark tentacles drag you into the abyss", "It's over..."])	
+			set_hp(-max_hp)
+
+func clear_status():
+	var statusList = status.get_children()
+	for status in statusList:
+		status.queue_free()
+				
 func apply_status(status):
 	var type = status.type
 	var mod = status.modifier
@@ -92,3 +134,8 @@ func apply_status(status):
 				status.set_duration(-1)
 				if(status.duration<=0):
 					damage_mod = damage_mod + 1
+			"mag":
+				print("You got the virus")
+			"penta":
+				doom_count += 1
+				status.set_duration(-1)
