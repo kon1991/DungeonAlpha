@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/ToolTip.gd" type="Script" id=2]
 
 [node name="ToolTip" type="Panel"]
 margin_right = 80.0
@@ -8,6 +9,7 @@ margin_bottom = 12.0
 rect_min_size = Vector2( 80, 12 )
 mouse_filter = 2
 theme = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
 margin_right = 79.0

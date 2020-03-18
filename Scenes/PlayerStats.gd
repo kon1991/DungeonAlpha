@@ -6,6 +6,7 @@ onready var textBox = main.find_node("TextBox")
 onready var statPanel = main.find_node("PlayerStatPanel")
 onready var hpLabel = statPanel.find_node("HPLabel")
 onready var mpLabel = statPanel.find_node("MPLabel")
+onready var labelEmmiter = main.find_node("LabelEmmiter")
 onready var enemy #= main.find_node("EnemyStats") #find enemy on instance
 onready var actions = ["AttackButton", "AbilityActionButton", "ItemActionButton", "SpecialActionButton"]
 onready var skills = ["PowerWordButton", "HealActionButton"]
@@ -15,7 +16,7 @@ onready var Weapon = load("res://Scenes/Weapon.gd")
 onready var weapon_name = "Sword"
 onready var weapon 
 
-onready var Armor = load("res://Scenes/Armor.gd")
+#onready var Armor = load("res://Scenes/Armor.gd")
 onready var armor_name = "Cloth"
 onready var armor
 
@@ -46,6 +47,10 @@ func _ready():
 
 #
 func set_hp(new_hp):
+	if(new_hp>0):
+		labelEmmiter.create_label("player", "heal", new_hp)
+	else:
+		labelEmmiter.create_label("player", "hurt", new_hp)
 	hp = hp + new_hp
 	if (hp >= max_hp):
 		hp = max_hp

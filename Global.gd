@@ -9,8 +9,8 @@ var item_rewards = { "Tick" : "S_Potion",
 						"Blobby" : "S_Potion",
 						"Bug Gang": "S_Potion"
 						}
-var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 2}
-var gold_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 5}
+var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 2, "Wurm": 100, "Devil": 20}
+var gold_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 5, "Wurm": 20, "Devil": 50}
 var xp = 0
 var gold = 0
 var inventory = []

@@ -8,6 +8,8 @@ onready var statPanel = main.find_node("EnemyStatPanel")
 onready var moodLabel = statPanel.find_node("Mood")
 onready var hpLabel = statPanel.find_node("HPLabel")
 onready var position = main.find_node("EnemyPosition")
+
+onready var labelEmmiter = main.find_node("LabelEmmiter")
 onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
 
@@ -59,7 +61,10 @@ func take_turn():
 	emit_signal("end_turn")
 
 func set_hp(new_hp, type="phys"):
-	print("NEW DODOD")
+	if(new_hp>0):
+		labelEmmiter.create_label("enemy", "heal", new_hp)
+	elif(new_hp<0):
+		labelEmmiter.create_label("enemy", "hurt", new_hp)
 	hp = hp + new_hp
 	if (hp >= max_hp):
 		hp = max_hp

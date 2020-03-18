@@ -7,6 +7,7 @@ onready var enemy
 onready var timer = $TooltipTimer
 onready var Tooltip = load("res://Scenes/ToolTip.tscn")
 onready var tooltip
+export(String) var tool_text
 
 signal end_turn
 
@@ -23,6 +24,8 @@ func _process(delta):
 		set_disabled(true)
 	elif(player.player_turn == true && player.noButtonsPressed == true):
 		set_disabled(false)
+	if(is_disabled()):
+		tooltip.visible = false
 
 func _on_pressed():
 	#add parameter for which menu to disable
@@ -40,19 +43,19 @@ func _on_mouse_entered():
 
 func _on_TooltipTimer_timeout():
 #	modulate = Color(1,1,1, 0)
-#	var mouse_pos = get_viewport().get_mouse_position()
-#	var view_size = get_viewport().get_size()
-#	var tooltip_size = tooltip.rect_size
-#	var diff = (160 - (mouse_pos.x + tooltip_size.x))
-##	print("MOUSE :" + str(mouse_pos.x))
-##	print("VIEW :" + str(view_size.x))
-##	print("TTSIZE :" + str(tooltip_size.x))
-#	print("DIFFF : " + str(diff))
-#	if(diff<0):
-#		mouse_pos.x += diff
-#	tooltip.rect_global_position = mouse_pos
-#
-#	tooltip.visible = true
+	var mouse_pos = get_viewport().get_mouse_position()
+	var view_size = get_viewport().get_size()
+	var tooltip_size = tooltip.rect_size
+	var diff = (160 - (mouse_pos.x + tooltip_size.x))
+#	print("MOUSE :" + str(mouse_pos.x))
+#	print("VIEW :" + str(view_size.x))
+#	print("TTSIZE :" + str(tooltip_size.x))
+	print("DIFFF : " + str(diff))
+	if(diff<0):
+		mouse_pos.x += diff
+	tooltip.rect_global_position = mouse_pos
+	tooltip.label.text = tool_text
+	tooltip.visible = true
 	pass
 
 

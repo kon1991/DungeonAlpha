@@ -5,6 +5,7 @@ var item_rewards = { "Tick" : { 40: [0, "S_Potion"], 80: [2, "Bug_Sword"], 100: 
 						"Beholdey" :{100: [0, "S_Potion"]},
 						"Blobby" : {100: [0, "S_Potion"]},
 						"Bug Gang": {100: [0, "S_Potion"]},
+						"Wurm": {100: [2, "Wurm_Scale"]},
 						"Devil": {100: [1, "Devil's Mark"]}
 					}
 					

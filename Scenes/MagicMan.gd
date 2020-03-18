@@ -24,6 +24,7 @@ func take_turn():
 		set_text("The magic man starts chanting!")
 		vanish = true
 		yield(textBox, "end_enemy_text")
+		emit_signal("end_turn")
 	else:
 		attack()
 	pass

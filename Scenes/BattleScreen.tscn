@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/BattleScreen.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Tick.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Images/fade.png" type="Texture" id=14]
 [ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=15]
 [ext_resource path="res://bigfont.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Scenes/LabelEmmiter.gd" type="Script" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
@@ -278,12 +279,11 @@ margin_right = 49.0
 margin_bottom = 19.0
 columns = 2
 
-[node name="CharSelect" parent="UI/ActionPanel" instance=ExtResource( 12 )]
-margin_left = 3.05859
-margin_top = 1.63126
-margin_right = 39.0586
-margin_bottom = 37.6313
-custom_styles/panel = ExtResource( 11 )
+[node name="CharPortrait" parent="UI/ActionPanel" instance=ExtResource( 12 )]
+margin_left = 4.0
+margin_top = 2.0
+margin_right = 40.0
+margin_bottom = 38.0
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 anchor_top = 0.5
@@ -350,7 +350,7 @@ z_as_relative = false
 
 [node name="FADE" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0 )
-position = Vector2( -31.7822, -5.76712 )
+position = Vector2( -31.7822, -5.45976 )
 texture = ExtResource( 14 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -380,11 +380,17 @@ text = "Try Again?"
 
 [node name="YOUDIED" type="Label" parent="."]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 8.95967
+margin_left = 8.34495
 margin_top = 58.5014
-margin_right = 150.96
+margin_right = 150.346
 margin_bottom = 99.5014
 custom_fonts/font = ExtResource( 16 )
 text = "YOU DIED"
+
+[node name="PlayerPosition" type="Position2D" parent="."]
+position = Vector2( 29, 93 )
+
+[node name="LabelEmmiter" type="Node" parent="."]
+script = ExtResource( 17 )
 [connection signal="pressed" from="UI/ActionPanel/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="timeout" from="UI/CenterContainer/TextBox/Timer" to="UI/CenterContainer/TextBox" method="_on_Timer_timeout"]
