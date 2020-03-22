@@ -1,14 +1,38 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/EnemyStats.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tick.gd" type="Script" id=2]
 [ext_resource path="res://Images/tik.png" type="Texture" id=3]
 [ext_resource path="res://Images/Status/heart.png" type="Texture" id=4]
 
-[node name="EnemyStats" instance=ExtResource( 1 )]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	float redness = abs(sin(TIME));
+	
+	if (apply == true) {
+		color.r = mix(texture(TEXTURE,UV).r, 1.0, redness);
+		
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/apply = false
+shader_param/amount = 1.0
+
+[node name="EnemyStats" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource( 2 )
 texture = ExtResource( 3 )
 
 [node name="Hearts" type="CPUParticles2D" parent="." index="1"]

@@ -6,3 +6,4 @@
 [node name="PowerWordButton" instance=ExtResource( 1 )]
 text = "SPEAK"
 script = ExtResource( 2 )
+tool_text = "Heal, Harm, or Kill"

@@ -10,3 +10,4 @@ margin_right = 32.2378
 margin_bottom = 19.7622
 text = "SPotion"
 script = ExtResource( 2 )
+tool_text = "Heal Self"

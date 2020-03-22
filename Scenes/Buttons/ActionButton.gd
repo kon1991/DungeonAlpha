@@ -55,7 +55,8 @@ func _on_TooltipTimer_timeout():
 		mouse_pos.x += diff
 	tooltip.rect_global_position = mouse_pos
 	tooltip.label.text = tool_text
-	tooltip.visible = true
+	if(tool_text!=""):
+		tooltip.visible = true
 	pass
 
 

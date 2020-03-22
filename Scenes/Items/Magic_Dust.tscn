@@ -6,3 +6,4 @@
 [node name="Magic_Dust" instance=ExtResource( 1 )]
 text = "Mgc Dust"
 script = ExtResource( 2 )
+tool_text = "Clear Statuses"

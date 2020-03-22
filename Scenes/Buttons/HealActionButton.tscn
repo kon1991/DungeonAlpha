@@ -6,3 +6,4 @@
 [node name="HealActionButton" instance=ExtResource( 1 )]
 text = "Heal"
 script = ExtResource( 2 )
+tool_text = "Heal Self"

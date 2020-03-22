@@ -21,6 +21,7 @@ func take_turn():
 		yield(get_tree().create_timer(0.8), "timeout")
 		escape()
 	if(mood == "???"):
+		sprite.get_material().set_shader_param("apply", true)
 		set_text("The magic man starts chanting!")
 		vanish = true
 		yield(textBox, "end_enemy_text")

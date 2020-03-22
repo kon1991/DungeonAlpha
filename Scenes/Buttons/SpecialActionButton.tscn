@@ -6,3 +6,4 @@
 [node name="SpecialActionButton" instance=ExtResource( 1 )]
 text = "Special"
 script = ExtResource( 2 )
+tool_text = "Use Specials"

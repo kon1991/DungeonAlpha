@@ -6,3 +6,4 @@
 [node name="Acid_Vial" instance=ExtResource( 1 )]
 text = "Acid Vial"
 script = ExtResource( 2 )
+tool_text = "Deal Acid Damage"

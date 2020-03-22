@@ -6,3 +6,4 @@
 [node name="ItemActionButton" instance=ExtResource( 1 )]
 text = "Items"
 script = ExtResource( 2 )
+tool_text = "Use Items"

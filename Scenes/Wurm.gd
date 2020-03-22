@@ -16,7 +16,8 @@ func _ready():
 
 func take_turn():
 	if(mood=="Curious"):
-		set_array_text(["You are a strange creature...", "Grow stronger before I consume you little meat", "The Wurm retreats silenty into the darkness..."])
+		set_array_text(["You are a strange creature...", "Grow stronger before I consume you", "The Wurm retreats into the darkness..."])
+		yield(textBox, "end_enemy_text")
 		var newReward = Reward.new(1, 1, "Wurm_Scale")
 		main.new_rewards.append(newReward)
 		main._on_Enemy_died(false)
@@ -48,7 +49,7 @@ func hyper_beam():
 	
 func set_hp(new_hp, type="phys"):
 	.set_hp(new_hp)
-	if(hp <=30):
+	if(hp <=40):
 		set_mood("Curious")
 	
 	

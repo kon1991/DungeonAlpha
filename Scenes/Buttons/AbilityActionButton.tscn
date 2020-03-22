@@ -9,3 +9,4 @@ margin_right = 32.0
 margin_bottom = 20.2378
 text = "Skills"
 script = ExtResource( 2 )
+tool_text = "Use Skills"

@@ -5,3 +5,4 @@
 
 [node name="InteractButton" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+tool_text = "Interact"
