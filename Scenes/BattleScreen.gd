@@ -24,6 +24,9 @@ onready var nextButton = $UI/PostBattlePanel/MarginContainer/OuterVBox/CenterCon
 onready var textInput = $UI/ActionPanel/CenterContainer/TextInput
 onready var tryAgainButton = $TryAgainContainer/TryAgainButton
 
+onready var mapScreen = $Map
+onready var battleScreen = $UI
+
 onready var Reward = load("res://Scenes/RewardContainer.tscn")
 
 var i = 0
@@ -35,11 +38,12 @@ signal interactionPropagation
 func _ready():
 	tryAgainButton.set_disabled(true)
 	tryAgainButton.visible = false
-	begin_battle()
+#	begin_battle()
 	
 	pass # Replace with function body.
 
 func begin_battle():
+	battleScreen.visible = true
 	buttonContainer.visible = true
 	specialContainer.visible = false
 	actionContainer.visible = false
@@ -59,6 +63,18 @@ func begin_battle():
 	enemyMood.text = enemy.mood
 	yield(enemy, "greet_over")
 	begin_player_turn()
+
+func end_battle():
+	animationPlayer.play("fadeIn")
+	go_to_map()
+	yield(animationPlayer,"animation_finished")
+
+func go_to_map():
+	battleScreen.visible = false
+	mapScreen.animationPlayer.play("fadeIn")
+	mapScreen.set_visible(true)
+	yield(mapScreen.animationPlayer, "animation_finished")
+	
 	
 func begin_player_turn():
 	
@@ -103,21 +119,10 @@ func _on_PlayerStats_end_turn():
 
 func _on_Enemy_died(won := true):
 	yield(get_tree().create_timer(0.8), "timeout")
+	
 	var enemy_name = enemy.mname
 	enemy.queue_free()
-	#should move to a function##
-#	var buttons = buttonContainer.get_children()
-#	for button in buttons:
-#		button.queue_free()
-#	buttons = itemContainer.get_children()
-#	for button in buttons:
-#		button.queue_free()
-#	buttons = actionContainer.get_children()
-#	for button in buttons:
-#		button.queue_free()
-#	buttons = specialContainer.get_children()
-#	for button in buttons:
-#		button.queue_free()
+	
 	free_buttons(buttonContainer)
 	free_buttons(itemContainer)
 	free_buttons(actionContainer)
@@ -133,8 +138,7 @@ func _on_Enemy_died(won := true):
 	for label in rewardLabels:
 		label.queue_free()
 	postBattle.visible = false
-	##################
-	animationPlayer.play("Fade")
+	animationPlayer.play("fadeout")
 	textBox.text = ""
 	#begin_battle()
 	yield(animationPlayer,"animation_finished") #this probably doesnt do shit
@@ -276,3 +280,13 @@ func on_death():
 	tryAgainButton.visible = true
 	animationPlayer.play("death")
 	tryAgainButton.set_disabled(false)
+
+
+func _on_Button_pressed():
+	randomize()
+	var enemyDict = Enemies.enemies
+	var randEnemy = enemyDict[randi()%enemyDict.size()]
+	var newEnemyScene = load("res://Scenes/"+randEnemy+".tscn")
+	enemies.append(newEnemyScene)
+	print(randEnemy)
+	_on_Enemy_died()

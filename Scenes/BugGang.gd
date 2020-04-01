@@ -28,10 +28,12 @@ func attack():
 	set_array_text(["\"NYEH\" the bugs shout,","as they scratch you everywhere"])
 	player.set_hp(-damage)
 	player.gold -= 2
+	yield(textBox, "end_enemy_text")
 	emit_signal("end_turn")
 	
 func steal():
 	set_array_text(["The bugs swarm you", "Your pockets feel emptier"])
+	yield(textBox, "end_enemy_text")
 	player.gold -= 5
 	emit_signal("end_turn")
 	

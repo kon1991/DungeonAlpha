@@ -1,31 +1,25 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/BattleScreen.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Tick.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Blobby.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/MagicMan.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/BugGang.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Beholder.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Wurm.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/Devil.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=9]
-[ext_resource path="res://new_shader.shader" type="Shader" id=10]
-[ext_resource path="res://default_theme.tres" type="Theme" id=11]
-[ext_resource path="res://button9slice.tres" type="StyleBox" id=12]
-[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=14]
-[ext_resource path="res://Images/fade.png" type="Texture" id=15]
-[ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=16]
-[ext_resource path="res://bigfont.tres" type="DynamicFont" id=17]
-[ext_resource path="res://Scenes/LabelEmmiter.gd" type="Script" id=18]
+[ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=2]
+[ext_resource path="res://new_shader.shader" type="Shader" id=3]
+[ext_resource path="res://default_theme.tres" type="Theme" id=4]
+[ext_resource path="res://button9slice.tres" type="StyleBox" id=5]
+[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=7]
+[ext_resource path="res://Images/fade.png" type="Texture" id=8]
+[ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=9]
+[ext_resource path="res://bigfont.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Scenes/LabelEmmiter.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/Map.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 10 )
+shader = ExtResource( 3 )
 shader_param/apply = true
 shader_param/amount = 5.0
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 10 )
+shader = ExtResource( 3 )
 shader_param/apply = false
 shader_param/amount = 5.0
 
@@ -109,6 +103,52 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=5]
+resource_name = "fadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("FADE:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "fadeout"
+length = 0.8
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "end_battle"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FADE:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("BackGround:color")
 tracks/0/interp = 1
@@ -128,7 +168,6 @@ __meta__ = {
 "_edit_horizontal_guides_": [  ],
 "_edit_vertical_guides_": [  ]
 }
-enemies = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]
 
 [node name="BackGround" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -143,9 +182,10 @@ __meta__ = {
 }
 
 [node name="PlayerStats" type="Node" parent="."]
-script = ExtResource( 9 )
+script = ExtResource( 2 )
 
 [node name="UI" type="Control" parent="."]
+visible = false
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -153,12 +193,13 @@ margin_left = 0.237823
 margin_top = 0.237827
 margin_right = 0.237823
 margin_bottom = 0.237823
-theme = ExtResource( 11 )
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="StatusPanel" type="Panel" parent="UI"]
+editor/display_folded = true
 margin_left = 10.0
 margin_top = 38.0
 margin_right = 54.0
@@ -172,6 +213,7 @@ margin_right = -3.0
 custom_constants/separation = 0
 
 [node name="PlayerStatPanel" type="PanelContainer" parent="UI"]
+editor/display_folded = true
 margin_left = 10.0
 margin_top = 4.0
 margin_right = 54.0
@@ -195,6 +237,7 @@ margin_bottom = 28.0
 text = "10/10MP"
 
 [node name="EnemyStatPanel" type="PanelContainer" parent="UI"]
+editor/display_folded = true
 margin_left = 109.0
 margin_top = 4.0
 margin_right = 151.0
@@ -218,6 +261,7 @@ margin_right = 38.0
 margin_bottom = 28.0
 
 [node name="ActionPanel" type="Panel" parent="UI"]
+editor/display_folded = true
 margin_left = 7.0
 margin_top = 75.2859
 margin_right = 154.0
@@ -236,6 +280,7 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/ActionPanel"]
+editor/display_folded = true
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -251,8 +296,8 @@ margin_top = 13.0
 margin_right = 81.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 64, 12 )
-custom_styles/focus = ExtResource( 12 )
-custom_styles/normal = ExtResource( 12 )
+custom_styles/focus = ExtResource( 5 )
+custom_styles/normal = ExtResource( 5 )
 align = 3
 caret_blink = true
 
@@ -295,7 +340,7 @@ margin_right = 49.0
 margin_bottom = 19.0
 columns = 2
 
-[node name="CharPortrait" parent="UI/ActionPanel" instance=ExtResource( 13 )]
+[node name="CharPortrait" parent="UI/ActionPanel" instance=ExtResource( 6 )]
 material = SubResource( 2 )
 margin_left = 4.0
 margin_top = 2.0
@@ -314,7 +359,7 @@ margin_top = 1.0
 margin_right = 138.0
 margin_bottom = 13.0
 text = "Dapper Tick Tips his Top Hat"
-script = ExtResource( 14 )
+script = ExtResource( 7 )
 
 [node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
 wait_time = 1.5
@@ -360,6 +405,11 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 30, 20 )
 text = "Next"
 
+[node name="Button" type="Button" parent="UI"]
+margin_right = 4.0
+margin_bottom = 8.0
+text = "re"
+
 [node name="EnemyPosition" type="Position2D" parent="."]
 position = Vector2( 80.8611, 31.3931 )
 z_index = 12
@@ -368,16 +418,17 @@ z_as_relative = false
 [node name="FADE" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0 )
 position = Vector2( -31.7822, -5.45976 )
-texture = ExtResource( 15 )
+texture = ExtResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fade = SubResource( 3 )
 anims/death = SubResource( 4 )
-anims/flash = SubResource( 5 )
+anims/fadeIn = SubResource( 5 )
+anims/fadeout = SubResource( 6 )
+anims/flash = SubResource( 7 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 16 )
-autoplay = true
+stream = ExtResource( 9 )
 
 [node name="TryAgainContainer" type="CenterContainer" parent="."]
 anchor_top = 1.0
@@ -393,7 +444,7 @@ margin_top = 8.0
 margin_right = 101.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 20, 20 )
-theme = ExtResource( 11 )
+theme = ExtResource( 4 )
 text = "Try Again?"
 
 [node name="YOUDIED" type="Label" parent="."]
@@ -402,13 +453,16 @@ margin_left = 8.34495
 margin_top = 58.5014
 margin_right = 150.346
 margin_bottom = 99.5014
-custom_fonts/font = ExtResource( 17 )
+custom_fonts/font = ExtResource( 10 )
 text = "YOU DIED"
 
 [node name="PlayerPosition" type="Position2D" parent="."]
 position = Vector2( 29, 93 )
 
 [node name="LabelEmmiter" type="Node" parent="."]
-script = ExtResource( 18 )
+script = ExtResource( 11 )
+
+[node name="Map" parent="." instance=ExtResource( 12 )]
 [connection signal="pressed" from="UI/ActionPanel/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="timeout" from="UI/CenterContainer/TextBox/Timer" to="UI/CenterContainer/TextBox" method="_on_Timer_timeout"]
+[connection signal="pressed" from="UI/Button" to="." method="_on_Button_pressed"]
