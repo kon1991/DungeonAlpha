@@ -17,6 +17,7 @@ func set_text_with_origin(new_text, origin):
 		textOrigin = origin
 		timer.start()
 	else:
+		print("apend")
 		textQueue.append([origin, new_text])
 		
 func set_text(new_text):
@@ -29,6 +30,7 @@ func set_text(new_text):
 
 func set_array_text(array, origin):
 	for text in array:
+		print("dafasdfas")
 		set_text_with_origin(text, origin)
 		
 func _on_Timer_timeout():
@@ -39,6 +41,8 @@ func _on_Timer_timeout():
 		var text_arr = textQueue.pop_front()
 #		text = textQueue.pop_front()
 		text = text_arr[1]
+		timer.set_wait_time(get_line_count()*1.5)
+		print("LINE COUNT IS " + str(get_line_count()))
 		if(textOrigin!=text_arr[0]):
 			emit_signal("end_"+textOrigin+"_text")
 			print("change_origin end_"+textOrigin+"_text")

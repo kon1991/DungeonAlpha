@@ -12,6 +12,7 @@ func _on_pressed():
 	if(text == "Pet"):
 		player.set_array_text(["You pet the Tick", "It kinda likes it"])
 		yield(textBox, "end_player_text")
+		main._on_BackButton_pressed()
 		emit_signal("end_turn")
 	else:
 		if(player.inventory.has("S_Potion")):
@@ -28,6 +29,7 @@ func _on_pressed():
 		else:
 			player.set_text("You have nothing to feed the Tick")
 			yield(textBox, "end_player_text")
+			main._on_BackButton_pressed()
 			emit_signal("end_turn")
-	main._on_BackButton_pressed()
+	
 	

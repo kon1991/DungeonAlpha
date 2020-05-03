@@ -12,7 +12,7 @@ onready var position = main.find_node("EnemyPosition")
 onready var labelEmmiter = main.find_node("LabelEmmiter")
 onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
-
+onready var mainAnimationPlayer = main.find_node("AnimationPlayer")
 onready var hp = 10 setget set_hp
 onready var mood = "Calm" setget set_mood
 onready var max_hp = 10 
@@ -70,8 +70,12 @@ func set_hp(new_hp, type="phys"):
 		hp = max_hp
 	elif (hp <= 0):
 		hp = 0
-		dead = true
+#		dead = true
+#		yield(textBox, "end_player_text")
 	hpLabel.text= str(hp) + "/"  + str(max_hp) + "HP"
+	if(hp == 0):
+		dead = true
+		yield(textBox, "end_player_text")
 	if(dead):
 		
 		emit_signal("enemy_died")
@@ -97,3 +101,6 @@ func has_tag(tag):
 		return true
 	else:
 		return false
+		
+func add_tag(tag):
+	tags.append(tag)

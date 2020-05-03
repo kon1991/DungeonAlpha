@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 Global="*res://Global.gd"
 Loot="*res://Scripts/Loot.gd"
 Enemies="*res://Scripts/Enemies.gd"
+Scry="*res://Scripts/Scry.gd"
 
 [display]
 

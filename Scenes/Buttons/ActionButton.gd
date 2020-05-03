@@ -3,6 +3,7 @@ extends Button
 onready var main = get_tree().current_scene
 onready var textBox = main.find_node("TextBox")
 onready var player = main.find_node("PlayerStats")
+onready var animationPlayer = main.find_node("AnimationPlayer")
 onready var enemy
 onready var timer = $TooltipTimer
 onready var Tooltip = load("res://Scenes/ToolTip.tscn")

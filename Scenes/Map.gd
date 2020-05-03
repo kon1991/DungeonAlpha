@@ -3,11 +3,13 @@ extends Node
 onready var Block = load("res://Scenes/Block.tscn")
 onready var grid = $UI/Center/Grid
 onready var map = []
-onready var player = $Node2D/Sprite
 onready var main = get_tree().current_scene
 onready var UI = $UI
 onready var animationPlayer = $AnimationPlayer
 onready var fade = $FADE
+onready var background = $TextureRect
+onready var shrineScreen = main.find_node("Shrine")
+var currentBlock = null setget set_current_block
 var complex = 4
 var connected = []
 const def_map = [["X","X","X","X","X","X"],["X","X","X","X","X","X"],["X","X","X","X","X","X"],
@@ -56,25 +58,38 @@ func create_map():
 	starting_block.set_is_visible(true)
 	starting_block.set_pressed(true)
 	starting_block.starting = true
+	set_current_block(starting_block)
 	create_content(active_blocks)
 	for block in active_blocks:
 		if(is_block_neighbour(starting_block,block)):
 			block.set_is_visible(true)
 	yield(starting_block, "draw")
-	player.global_position = Vector2(starting_block.rect_global_position.x+8, starting_block.rect_global_position.y+8)
 #
-func on_set_sprite(pos):
-	player.position = Vector2(pos.x+8, pos.y+8)
+#func on_set_sprite(pos):
+#	player.position = Vector2(pos.x+8, pos.y+8)
 
-func on_block_pressed(pressed_block, enemy):
-	if enemy != null:
-		var newEnemyScene = load("res://Scenes/"+enemy+".tscn")
+func on_block_pressed(pressed_block, block_data):
+	if block_data.enemy != null:
+		var newEnemyScene = load("res://Scenes/Enemies/"+block_data.enemy+".tscn")
+		print(block_data.enemy)
 		main.enemies.append(newEnemyScene)
 		animationPlayer.play("fadeOut")
+		
 		yield(animationPlayer, "animation_finished")
+		set_current_block(block_data)
+		block_data.enemy = null
 		fade.visible = false
 		set_visible(false)
 		main.begin_battle()
+	elif block_data.type == "shrine":
+		animationPlayer.play("fadeOut")
+		yield(animationPlayer, "animation_finished")
+		set_current_block(block_data)
+		block_data.enemy = null
+		fade.visible = false
+		set_visible(false)
+		shrineScreen.shrineStart()
+		
 	var blocks = get_tree().get_nodes_in_group("blocks")
 	for block in blocks:
 		if(is_block_neighbour(pressed_block, block)):
@@ -205,7 +220,8 @@ func create_content(blocks):
 	var has_shrine = false
 	for block in blocks:
 		if !block.starting:
-			var rand_block = randi()%5
+#			var rand_block = randi()%5
+			var rand_block = 0
 			match rand_block:
 				0,1,2:
 					block.type = "fight"
@@ -228,4 +244,14 @@ func create_content(blocks):
 func set_visible(value):
 	UI.set_visible(value)
 	fade.visible = value
+	background.visible = value
+	$fakehp.visible = value
+	$fakemp.visible = value
+	$cent.visible = value
 	print(value)
+	
+func set_current_block(new_current_block):
+	if currentBlock != null:
+		currentBlock.set_current(false)
+	currentBlock = new_current_block
+	currentBlock.set_current(true)

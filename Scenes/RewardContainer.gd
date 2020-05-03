@@ -21,12 +21,14 @@ func _on_Button_pressed():
 	button.set_disabled(true)
 	button.text = "Taken"
 	if(cat == ITEM):
-		player.inventory.append(item_name)
+		if player.inventory.size() == 4:
+			main.replaceItem = item_name
+			main.toggle_rewards()
+		else:
+			player.inventory.append(item_name)
 	elif(cat == PASS):
 		player.passive.append(item_name)
 	elif(cat == WEAP):
-		player.weapon_name = item_name
+		player.set_weapon(item_name)
 	elif(cat == ARM):
-		player.armor_name = item_name
-	print( str(player.weapon_name)+ " " +str(player.armor_name))
-	pass # Replace with function body.
+		player.set_armor(item_name)

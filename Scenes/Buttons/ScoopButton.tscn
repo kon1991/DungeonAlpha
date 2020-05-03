@@ -6,4 +6,4 @@
 [node name="ScoopButton" instance=ExtResource( 1 )]
 text = "Scoop"
 script = ExtResource( 2 )
-tool_text = ""
+tool_text = "Scoop The Enemy"

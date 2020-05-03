@@ -1,25 +1,32 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scenes/BattleScreen.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/PlayerStats.gd" type="Script" id=2]
-[ext_resource path="res://new_shader.shader" type="Shader" id=3]
-[ext_resource path="res://default_theme.tres" type="Theme" id=4]
-[ext_resource path="res://button9slice.tres" type="StyleBox" id=5]
-[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=7]
-[ext_resource path="res://Images/fade.png" type="Texture" id=8]
-[ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=9]
-[ext_resource path="res://bigfont.tres" type="DynamicFont" id=10]
-[ext_resource path="res://Scenes/LabelEmmiter.gd" type="Script" id=11]
-[ext_resource path="res://Scenes/Map.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/PassiveManager.gd" type="Script" id=3]
+[ext_resource path="res://new_shader.shader" type="Shader" id=4]
+[ext_resource path="res://default_theme.tres" type="Theme" id=5]
+[ext_resource path="res://button9slice.tres" type="StyleBox" id=6]
+[ext_resource path="res://Scenes/CharPortrait.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/TextBox.gd" type="Script" id=8]
+[ext_resource path="res://Images/notready/magic3.png" type="Texture" id=9]
+[ext_resource path="res://Images/fade.png" type="Texture" id=10]
+[ext_resource path="res://Images/Effects/SlashEffect.png" type="Texture" id=11]
+[ext_resource path="res://Images/Effects/SlashEffectFire.png" type="Texture" id=12]
+[ext_resource path="res://Images/notready/magic2.png" type="Texture" id=13]
+[ext_resource path="res://Images/Effects/SlashEffectMagic.png" type="Texture" id=14]
+[ext_resource path="res://battle_theme.wav.wav" type="AudioStream" id=15]
+[ext_resource path="res://bigfont.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Scenes/LabelEmmiter.gd" type="Script" id=17]
+[ext_resource path="res://Scenes/Map.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/Shrine.tscn" type="PackedScene" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
+shader = ExtResource( 4 )
 shader_param/apply = true
 shader_param/amount = 5.0
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 3 )
+shader = ExtResource( 4 )
 shader_param/apply = false
 shader_param/amount = 5.0
 
@@ -52,6 +59,58 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=4]
+length = 0.5
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemyPosition/AttackAnimation:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemyPosition/AttackAnimation:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("EnemyPosition/AttackAnimation:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyPosition/AttackAnimation:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ) ]
+}
+
+[sub_resource type="Animation" id=5]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("YOUDIED:modulate")
@@ -102,8 +161,7 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "fadeIn"
+[sub_resource type="Animation" id=6]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("FADE:modulate")
@@ -118,8 +176,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "fadeout"
+[sub_resource type="Animation" id=7]
 length = 0.8
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -128,7 +185,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.7 ),
+"times": PoolRealArray( 0.8 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -148,7 +205,60 @@ tracks/1/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
+resource_name = "fire_attack"
+length = 0.5
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemyPosition/AttackAnimation:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemyPosition/AttackAnimation:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("EnemyPosition/AttackAnimation:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyPosition/AttackAnimation:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1.18921 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("BackGround:color")
 tracks/0/interp = 1
@@ -162,11 +272,256 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=10]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemyPosition/AttackAnimation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemyPosition/AttackAnimation:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("EnemyPosition/AttackAnimation:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyPosition/AttackAnimation:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("EnemyPosition/AttackAnimation:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "magic-2"
+length = 0.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemyPosition/AttackAnimation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemyPosition/AttackAnimation:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("EnemyPosition/AttackAnimation:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyPosition/AttackAnimation:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("EnemyPosition/AttackAnimation:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "magic-3"
+length = 0.8
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemyPosition/AttackAnimation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemyPosition/AttackAnimation:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("EnemyPosition/AttackAnimation:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyPosition/AttackAnimation:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.56 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("EnemyPosition/AttackAnimation:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.5
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemyPosition/AttackAnimation:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemyPosition/AttackAnimation:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("EnemyPosition/AttackAnimation:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyPosition/AttackAnimation:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+
 [node name="BattleScreen" type="Node"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ],
-"_edit_vertical_guides_": [  ]
+"_edit_vertical_guides_": [ 24.8696, 123.898 ]
 }
 
 [node name="BackGround" type="ColorRect" parent="."]
@@ -184,8 +539,10 @@ __meta__ = {
 [node name="PlayerStats" type="Node" parent="."]
 script = ExtResource( 2 )
 
+[node name="PassiveManager" type="Node" parent="PlayerStats"]
+script = ExtResource( 3 )
+
 [node name="UI" type="Control" parent="."]
-visible = false
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -193,17 +550,17 @@ margin_left = 0.237823
 margin_top = 0.237827
 margin_right = 0.237823
 margin_bottom = 0.237823
-theme = ExtResource( 4 )
+theme = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="StatusPanel" type="Panel" parent="UI"]
-editor/display_folded = true
 margin_left = 10.0
 margin_top = 38.0
 margin_right = 54.0
 margin_bottom = 55.0
+custom_styles/panel = ExtResource( 6 )
 
 [node name="StatusContainer" type="HBoxContainer" parent="UI/StatusPanel"]
 anchor_right = 1.0
@@ -213,7 +570,6 @@ margin_right = -3.0
 custom_constants/separation = 0
 
 [node name="PlayerStatPanel" type="PanelContainer" parent="UI"]
-editor/display_folded = true
 margin_left = 10.0
 margin_top = 4.0
 margin_right = 54.0
@@ -261,7 +617,6 @@ margin_right = 38.0
 margin_bottom = 28.0
 
 [node name="ActionPanel" type="Panel" parent="UI"]
-editor/display_folded = true
 margin_left = 7.0
 margin_top = 75.2859
 margin_right = 154.0
@@ -280,7 +635,6 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/ActionPanel"]
-editor/display_folded = true
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -296,8 +650,8 @@ margin_top = 13.0
 margin_right = 81.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 64, 12 )
-custom_styles/focus = ExtResource( 5 )
-custom_styles/normal = ExtResource( 5 )
+custom_styles/focus = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
 align = 3
 caret_blink = true
 
@@ -340,7 +694,7 @@ margin_right = 49.0
 margin_bottom = 19.0
 columns = 2
 
-[node name="CharPortrait" parent="UI/ActionPanel" instance=ExtResource( 6 )]
+[node name="CharPortrait" parent="UI/ActionPanel" instance=ExtResource( 7 )]
 material = SubResource( 2 )
 margin_left = 4.0
 margin_top = 2.0
@@ -353,15 +707,21 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_bottom = 14.0
 
-[node name="TextBox" type="Label" parent="UI/CenterContainer"]
-margin_left = 21.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 13.0
-text = "Dapper Tick Tips his Top Hat"
-script = ExtResource( 7 )
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+margin_top = 55.0
+margin_right = 160.0
+margin_bottom = 76.0
 
-[node name="Timer" type="Timer" parent="UI/CenterContainer/TextBox"]
+[node name="TextBox" type="Label" parent="UI/MarginContainer"]
+margin_top = 4.0
+margin_right = 160.0
+margin_bottom = 16.0
+text = "Dapper Tick Tips his Top Hat"
+align = 1
+autowrap = true
+script = ExtResource( 8 )
+
+[node name="Timer" type="Timer" parent="UI/MarginContainer/TextBox"]
 wait_time = 1.5
 one_shot = true
 
@@ -384,51 +744,99 @@ custom_constants/margin_bottom = 10
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 131.0
-margin_bottom = 104.0
+margin_bottom = 108.0
 
 [node name="InnerVBox" type="VBoxContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox"]
-margin_right = 111.0
+margin_right = 121.0
 margin_bottom = 70.0
 grow_horizontal = 0
 rect_min_size = Vector2( 0, 70 )
 custom_constants/separation = 5
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox"]
+[node name="DiscardLabelCont" type="CenterContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="DiscardLabel" type="Label" parent="UI/PostBattlePanel/MarginContainer/OuterVBox/DiscardLabelCont"]
+margin_top = 10.0
+margin_right = 91.0
+margin_bottom = 29.0
+text = "What do you discard?
+"
+align = 1
+
+[node name="InventoryContainer" type="CenterContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox"]
 margin_top = 74.0
-margin_right = 111.0
-margin_bottom = 94.0
+margin_right = 121.0
+margin_bottom = 74.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox/InventoryContainer"]
+visible = false
+margin_left = 60.0
+margin_right = 60.0
+columns = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/PostBattlePanel/MarginContainer/OuterVBox"]
+margin_top = 78.0
+margin_right = 121.0
+margin_bottom = 98.0
 
 [node name="NextButton" type="Button" parent="UI/PostBattlePanel/MarginContainer/OuterVBox/CenterContainer"]
-margin_left = 40.0
-margin_right = 70.0
+margin_left = 45.0
+margin_right = 75.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 30, 20 )
 text = "Next"
+
+[node name="BackButton" type="Button" parent="UI/PostBattlePanel/MarginContainer/OuterVBox/CenterContainer"]
+visible = false
+margin_left = 45.0
+margin_right = 75.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 30, 20 )
+text = "Back"
 
 [node name="Button" type="Button" parent="UI"]
 margin_right = 4.0
 margin_bottom = 8.0
 text = "re"
 
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+margin_right = 4.0
+margin_bottom = 4.0
+
 [node name="EnemyPosition" type="Position2D" parent="."]
 position = Vector2( 80.8611, 31.3931 )
 z_index = 12
 z_as_relative = false
 
+[node name="AttackAnimation" type="Sprite" parent="EnemyPosition"]
+visible = false
+texture = ExtResource( 9 )
+hframes = 6
+frame = 5
+
 [node name="FADE" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0 )
-position = Vector2( -31.7822, -5.45976 )
-texture = ExtResource( 8 )
+position = Vector2( -31.7822, -5.66367 )
+texture = ExtResource( 10 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fade = SubResource( 3 )
-anims/death = SubResource( 4 )
-anims/fadeIn = SubResource( 5 )
-anims/fadeout = SubResource( 6 )
-anims/flash = SubResource( 7 )
+anims/attack = SubResource( 4 )
+anims/death = SubResource( 5 )
+anims/fadeIn = SubResource( 6 )
+anims/fadeout = SubResource( 7 )
+anims/fire_attack = SubResource( 8 )
+anims/flash = SubResource( 9 )
+anims/magic = SubResource( 10 )
+anims/magic-2 = SubResource( 11 )
+anims/magic-3 = SubResource( 12 )
+anims/magic_attack = SubResource( 13 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
+stream = ExtResource( 15 )
 
 [node name="TryAgainContainer" type="CenterContainer" parent="."]
 anchor_top = 1.0
@@ -444,25 +852,28 @@ margin_top = 8.0
 margin_right = 101.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 20, 20 )
-theme = ExtResource( 4 )
+theme = ExtResource( 5 )
 text = "Try Again?"
 
 [node name="YOUDIED" type="Label" parent="."]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 8.34495
+margin_left = 8.11902
 margin_top = 58.5014
-margin_right = 150.346
+margin_right = 150.12
 margin_bottom = 99.5014
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 16 )
 text = "YOU DIED"
 
 [node name="PlayerPosition" type="Position2D" parent="."]
 position = Vector2( 29, 93 )
 
 [node name="LabelEmmiter" type="Node" parent="."]
-script = ExtResource( 11 )
+script = ExtResource( 17 )
 
-[node name="Map" parent="." instance=ExtResource( 12 )]
+[node name="Map" parent="." instance=ExtResource( 18 )]
+
+[node name="Shrine" parent="." instance=ExtResource( 19 )]
 [connection signal="pressed" from="UI/ActionPanel/BackButton" to="." method="_on_BackButton_pressed"]
-[connection signal="timeout" from="UI/CenterContainer/TextBox/Timer" to="UI/CenterContainer/TextBox" method="_on_Timer_timeout"]
+[connection signal="timeout" from="UI/MarginContainer/TextBox/Timer" to="UI/MarginContainer/TextBox" method="_on_Timer_timeout"]
 [connection signal="pressed" from="UI/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="TryAgainContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]

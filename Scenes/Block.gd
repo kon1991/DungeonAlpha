@@ -6,11 +6,13 @@ var type setget set_type
 var position 
 var is_visible = false setget set_is_visible
 var starting = false
+var current = false setget set_current
 var enemy = null
 onready var icon = $TextureRect
 onready var visibleSprite = load("res://Images/Blocks/NotVisitedBlock.png")
 onready var invisibleSprite = load("res://Images/Blocks/InvisibleBlock.png")
 onready var pressedSprite = load("res://Images/Blocks/DefaultBlock.png")
+onready var playerIcon = load("res://Images/Blocks/Symbols/PlayerIcon.png")
 
 signal set_sprite
 signal block_pressed
@@ -27,16 +29,24 @@ func set_type(new_type):
 	type = new_type
 	var texture
 	if type == "fight":
-		texture = load("res://Images/Blocks/Symbols/InteractIcon.png")
+		texture = load("res://Images/Blocks/Symbols/BossIcon.png")
 	elif type == "shop":
 		texture = load("res://Images/Blocks/Symbols/ShopIcon.png")
 	elif type == "shrine":
 		texture = load("res://Images/Blocks/Symbols/ShrineIcon.png")
 	icon.set_texture(texture)
+	icon.visible = false
+
+func set_current(value):
+	if value:
+		icon.set_texture(playerIcon)
+	else:
+		icon.set_texture(null)
 
 func get_random_enemy():
 	var enemyDict = Enemies.enemies
-	var floor_enemies = enemyDict["floor_0"]
+#	var floor_enemies = enemyDict["floor_0"]
+	var floor_enemies = { 0: "Devil"}
 	var randEnemy = floor_enemies[randi()%floor_enemies.size()]
 	enemy = randEnemy
 
@@ -45,7 +55,7 @@ func _on_Block_pressed():
 		print("ASDA")
 		print(enemy)
 		set_pressed(true)
-		emit_signal("block_pressed", Vector2(x,y), enemy)
+		emit_signal("block_pressed", Vector2(x,y), self)
 #		icon.visible = true
 
 func set_pressed(state):
@@ -56,7 +66,7 @@ func set_pressed(state):
 func _on_Block_mouse_entered():
 	print(rect_global_position)
 #	set_is_visible(true)
-	emit_signal("set_sprite", rect_global_position)
+#	emit_signal("set_sprite", rect_global_position)
 
 func set_is_visible(_visible):
 	is_visible = _visible
@@ -65,8 +75,10 @@ func set_is_visible(_visible):
 		set_hover_texture(pressedSprite)
 		
 		set_pressed_texture(pressedSprite)
+		icon.visible = true
 	else:
 		set_normal_texture(invisibleSprite)
 		set_hover_texture(invisibleSprite)
 		set_pressed_texture(invisibleSprite)
+		icon.visible = false
 

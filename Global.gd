@@ -2,15 +2,12 @@ extends Node
 
 onready var Reward = load("res://Reward.gd")
 var current_scene = null
-var player_character = "Noi"
-var item_rewards = { "Tick" : "S_Potion",
-						"Magic Man" : "Magic_Dust",
-						"Beholdey" : "S_Potion",
-						"Blobby" : "S_Potion",
-						"Bug Gang": "S_Potion"
-						}
-var xp_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 2, "Wurm": 100, "Devil": 20}
-var gold_rewards = { "Tick" : 1, "Magic Man" : 5, "Beholdey" : 3, "Blobby" : 2, "Bug Gang": 5, "Wurm": 20, "Devil": 50}
+var player_character = "DapperNoi"
+#monster name here
+var xp_rewards = { "Tick" : 1, "Dapper Tick": 2, "Magic Man" : 5, "Beholdey" : 10, "Blobby" : 2, "Bug Gang": 2,
+					 "DragonPoop": 2, "Skelly Warrior": 3, "MegaBox": 1, "Doug": 10, "Wurm": 100, "Devil": 20}
+var gold_rewards = { "Tick" : 1, "Dapper Tick": 2, "Magic Man" : 5, "Beholdey" : 10, "Blobby" : 2, "Bug Gang": 5, "DragonPoop": 5, 
+					"Skelly Warrior": 3, "MegaBox": 20, "Doug": 5, "Wurm": 20, "Devil": 50}
 var xp = 0
 var gold = 0
 var inventory = []
@@ -50,10 +47,10 @@ func determine_rewards(mname):
 	var item_reward = Loot.get_item_reward(mname)
 	var newReward = Reward.new(item_reward[0], 1, item_reward[1])
 	rewards.append(newReward)
-	var xp_reward = xp_rewards.get(mname)
-	newReward = Reward.new(4, xp_reward, null)
-	rewards.append(newReward)
 	var gold_reward = gold_rewards.get(mname)
 	newReward = Reward.new(5, gold_reward, null)
+	rewards.append(newReward)
+	var xp_reward = xp_rewards.get(mname)
+	newReward = Reward.new(4, xp_reward, null)
 	rewards.append(newReward)
 	return rewards
